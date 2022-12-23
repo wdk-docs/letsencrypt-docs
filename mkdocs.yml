@@ -1,1 +1,97 @@
-site_name: My Docs
+site_name: Let’s Encrypt
+site_url: https://knative.dev/docs
+site_description: Let’s Encrypt 文档
+docs_dir: source
+site_dir: docs
+extra_css:
+  - stylesheets/extra.css
+
+repo_url: https://github.com/wdk-docs/letsencrypt-docs
+edit_uri: edit/main/docs
+
+theme:
+  name: material
+  logo: images/letsencrypt-logo-horizontal.svg
+  favicon: images/favicon.ico
+  # custom_dir: overrides
+  features:
+    - navigation.tabs
+    - navigation.tracking
+    - navigation.tabs.sticky
+    - navigation.top
+
+markdown_extensions:
+  # - mdx_include:
+  #     base_path: docs
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - attr_list
+  - meta
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: source/snippets
+  - pymdownx.keys
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.escapeall
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - toc:
+      permalink: true
+  - def_list
+
+plugins:
+  search:
+    # Spaces, dashes, periods and forward-slash (so serving.knative.dev/blibble can be searched as blibble).
+    separator: '[\/\s\-\.]+'
+  macros:
+    # module_name: hack/macros
+    include_dir: source/snippets
+  exclude:
+    glob:
+      # Exclude files that contain hugo specific shortcodes
+      # (either the include shortcode or not-converted-yet tabs).
+      - snippets/*
+      - smoketest.md
+  awesome-pages:
+    filename: ".index"
+    collapse_single_pages: true
+    strict: false
+
+copyright: "版权所有 © 2022 Knative Authors"
+
+extra:
+  social:
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/KnativeProject
+    - icon: fontawesome/brands/github
+      link: https://github.com/knative/community
+      name: Knative Community on Github
+    - icon: fontawesome/brands/slack
+      link: https://slack.knative.dev
+      name: Slack
+  # TODO: Replace with https://github.com/mkdocs/mkdocs/pull/2267 once mkdocs 1.2 is out.
+  version_warning: !!python/object/apply:os.getenv ["VERSION_WARNING"]
+  knative_version: !!python/object/apply:os.getenv ["KNATIVE_VERSION"]
+  branch: !!python/object/apply:os.getenv ["SAMPLES_BRANCH", "main"]
+  # analytics:
+  #   provider: google
+  #   property: G-YRMNFYE32R
+  version:
+    provider: mike
+nav:
+  - 主页: index.md
+  - Certbot:
+      - 说明: certbot/instructions.md
+      - 介绍: certbot/intro.md
+      - 手册: certbot/using.md
+      - 帮助: certbot/help.md
+      - 术语: certbot/glossary.md
+      - FAQ: certbot/faq.md
+      - 什么是证书: certbot/what.md
