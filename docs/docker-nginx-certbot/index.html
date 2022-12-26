@@ -1,0 +1,1077 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Let’s Encrypt 文档">
+      
+      
+      
+        <link rel="canonical" href="https://knative.dev/docs/docker-nginx-certbot/">
+      
+      <link rel="icon" href="../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>入门手册 - Let’s Encrypt</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#docker-nginx-certbot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Let’s Encrypt" class="md-header__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Let’s Encrypt
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              入门手册
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      主页
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../certbot/instructions/" class="md-tabs__link">
+        Certbot
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        docker-nginx-certbot
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Let’s Encrypt" class="md-nav__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    Let’s Encrypt
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/instructions/" class="md-nav__link">
+        说明
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/install/" class="md-nav__link">
+        安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/intro/" class="md-nav__link">
+        介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/using/" class="md-nav__link">
+        手册
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/help/" class="md-nav__link">
+        帮助
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/glossary/" class="md-nav__link">
+        术语
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot/what/" class="md-nav__link">
+        什么是证书
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          docker-nginx-certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="docker-nginx-certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          docker-nginx-certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          入门手册
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        入门手册
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    值得注意的特性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    使用
+  </a>
+  
+    <nav class="md-nav" aria-label="使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    开始之前
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    可用的环境变量
+  </a>
+  
+    <nav class="md-nav" aria-label="可用的环境变量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    必选
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    可选
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    先进的
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    卷
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-run" class="md-nav__link">
+    运行 docker run
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    运行 docker-compose
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    自己构建
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docs/good_to_know/" class="md-nav__link">
+        详细介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docs/advanced_usage/" class="md-nav__link">
+        高级用法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docs/certbot_authenticators/" class="md-nav__link">
+        DNS验证器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docs/nginx_tips/" class="md-nav__link">
+        Nginx提示
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docs/dockerhub_tags/" class="md-nav__link">
+        DockerHub标签
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="docs/changelog/" class="md-nav__link">
+        更新日志
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    值得注意的特性
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    使用
+  </a>
+  
+    <nav class="md-nav" aria-label="使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    开始之前
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    可用的环境变量
+  </a>
+  
+    <nav class="md-nav" aria-label="可用的环境变量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    必选
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    可选
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    先进的
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    卷
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-run" class="md-nav__link">
+    运行 docker run
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docker-compose" class="md-nav__link">
+    运行 docker-compose
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    自己构建
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/wdk-docs/letsencrypt-docs/edit/main/docs/docker-nginx-certbot/README.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="docker-nginx-certbot">docker-nginx-certbot<a class="headerlink" href="#docker-nginx-certbot" title="Permanent link">&para;</a></h1>
+<p><img alt="🔗" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f517.svg" title=":link:" /> <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot">https://github.com/JonasAlfredsson/docker-nginx-certbot</a></p>
+<p>使用<a href="https://letsencrypt.org/">Let's Encrypt</a>免费证书颁发机构及其客户端<a href="https://github.com/certbot/certbot"><em>certbot</em></a>自动创建和更新网站 SSL 证书。
+构建在<a href="https://github.com/nginxinc/docker-nginx">官方 Nginx Docker 镜像</a>(Debian 和 Alpine)之上，并使用 OpenSSL/LibreSSL 自动创建一些密码初始握手时使用的 Diffie-Hellman 参数。</p>
+<blockquote>
+<p><img alt="ℹ" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2139.svg" title=":information_source:" /> 这个容器第一次启动时，可能需要很长时间才能响应请求。
+更多信息请参见<a href="docs/good_to_know/#diffie-hellman-parameters">Diffie-Hellman parameters</a>部分。</p>
+<p><img alt="ℹ" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2139.svg" title=":information_source:" /> 在进行 Docker pull 操作时，请使用<a href="docs/dockerhub_tags/">特定标签</a>，因为<code>:latest</code> 可能并不总是 100%稳定。</p>
+</blockquote>
+<h3 id="_1">值得注意的特性<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>当<a href="docs/good_to_know/#how-the-script-add-domain-names-to-certificate-requests">请求证书</a> (i.e. both <code>example.com</code> and <code>www.example.com</code>)时处理多个服务器名.</li>
+<li>处理通配符域请求，以防您使用<a href="docs/certbot_authenticators/">DNS 身份验证</a>.</li>
+<li>可以<a href="docs/advanced_usage/#multi-certificate-setup">同时</a>申请<a href="docs/good_to_know/#ecdsa-and-rsa-certificates">RSA 和 ECDSA</a>证书</li>
+<li>如果已定义，将创建<a href="docs/good_to_know/#diffie-hellman-parameters">Diffie-Hellman 参数</a>。</li>
+<li>使用<a href="https://github.com/nginxinc/docker-nginx">父容器</a>的<a href="https://github.com/nginxinc/docker-nginx/tree/master/entrypoint"><code>/docker-entrypoint.d/</code></a>文件夹。</li>
+<li>当停止/杀死/失败时，将报告正确的<a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/43dde6ec24f399fe49729b28ba4892665e3d7078">退出代码</a>。</li>
+<li>你可以通过<a href="docs/advanced_usage/#manualforce-renewal">发送一个<code>SIGHUP</code></a>信号来重新加载配置(不需要重新启动容器)。</li>
+<li>在<a href="docs/advanced_usage/#local-ca">本地 CA</a>的帮助下<strong>离线</strong>使用此映像的可能性.</li>
+<li>为<a href="docs/dockerhub_tags/">多个体系结构</a>构建的<a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/28">Debian 和 Alpine</a>映像.</li>
+</ul>
+<h2 id="_2">使用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">开始之前<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>本指南希望您已经拥有一个指向正确 IP 地址的域，并且如果您使用 NAT，您的端口<code>80</code> and <code>443</code>都被正确转发。
+   否则，我推荐<a href="https://www.duckdns.org/">DuckDNS</a>作为动态 DNS 提供商，然后搜索如何在你的路由器上端口转发，或者可能找到它<a href="https://portforward.com/router.htm">这里</a>。</p>
+</li>
+<li>
+<p>我建议您至少阅读<a href="docs/good_to_know/">Good to Know</a>文档中的前两部分，因为这将为您提供一些关于如何创建基本服务器配置以及如何使用 Let's Encrypt 预演服务器以不受速率限制的重要提示。</p>
+</li>
+<li>
+<p>我认为没有必要提及你是否找到了这个存储库，但你需要安装<a href="https://docs.docker.com/engine/install/">Docker</a>才能正常工作。</p>
+</li>
+</ol>
+<h2 id="_4">可用的环境变量<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="_5">必选<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>CERTBOT_EMAIL</code>: 你的电子邮件地址。Let's Encrypt 用于在出现安全问题时与您联系。</li>
+</ul>
+<h3 id="_6">可选<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>DHPARAM_SIZE</code>: <a href="docs/good_to_know/#diffie-hellman-parameters">Diffie-Hellman 参数</a>的大小 (default: <code>2048</code>)</li>
+<li><code>ELLIPTIC_CURVE</code>: The size/<a href="https://security.stackexchange.com/a/104991">curve</a> of the ECDSA keys (default: <code>secp256r1</code>)</li>
+<li><code>RENEWAL_INTERVAL</code>: Time interval between certbot's <a href="docs/good_to_know/#renewal-check-interval">renewal checks</a> (default: <code>8d</code>)</li>
+<li><code>RSA_KEY_SIZE</code>: The size of the RSA encryption keys (default: <code>2048</code>)</li>
+<li><code>STAGING</code>: Set to <code>1</code> to use Let's Encrypt's <a href="docs/good_to_know/#initial-testing">staging servers</a> (default: <code>0</code>)</li>
+<li><code>USE_ECDSA</code>: Set to <code>0</code> to have certbot use <a href="docs/good_to_know/#ecdsa-and-rsa-certificates">RSA instead of ECDSA</a> (default: <code>1</code>)</li>
+</ul>
+<h3 id="_7">先进的<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>CERTBOT_AUTHENTICATOR</code>: The <a href="docs/certbot_authenticators/">authenticator plugin</a> to use when responding to challenges (default: <code>webroot</code>)</li>
+<li><code>CERTBOT_DNS_PROPAGATION_SECONDS</code>: The number of seconds to wait for the DNS challenge to <a href="docs/certbot_authenticators/#troubleshooting-tips">propagate</a> (default: certbot's default)</li>
+<li><code>DEBUG</code>: Set to <code>1</code> to enable debug messages and use the <a href="https://github.com/docker-library/docs/tree/master/nginx#running-nginx-in-debug-mode"><code>nginx-debug</code></a> binary (default: <code>0</code>)</li>
+<li><code>USE_LOCAL_CA</code>: Set to <code>1</code> to enable the use of a <a href="docs/advanced_usage/#local-ca">local certificate authority</a> (default: <code>0</code>)</li>
+</ul>
+<h2 id="_8">卷<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>/etc/letsencrypt</code>: 保存获取的证书和 Diffie-Hellman 参数</li>
+</ul>
+<h2 id="docker-run">运行 <code>docker run</code><a class="headerlink" href="#docker-run" title="Permanent link">&para;</a></h2>
+<p>Create your own <a href="docs/good_to_know/#the-user_confd-folder"><code>user_conf.d/</code></a>
+folder and place all of you custom server config files in there. When done you
+can just start the container with the following command
+(<a href="docs/dockerhub_tags/">available tags</a>):</p>
+<div class="highlight"><pre><span></span><code>docker run -it -p <span class="m">80</span>:80 -p <span class="m">443</span>:443 <span class="se">\</span>
+           --env <span class="nv">CERTBOT_EMAIL</span><span class="o">=</span>your@email.org <span class="se">\</span>
+           -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/nginx_secrets:/etc/letsencrypt <span class="se">\</span>
+           -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/user_conf.d:/etc/nginx/user_conf.d:ro <span class="se">\</span>
+           --name nginx-certbot jonasal/nginx-certbot:latest
+</code></pre></div>
+<blockquote>
+<p>You should be able to detach from the container by holding <code>Ctrl</code> and pressing
+<code>p</code> + <code>q</code> after each other.</p>
+</blockquote>
+<p>As was mentioned in the introduction; the very first time this container is
+started it might take a long time before before it is ready to
+<a href="docs/good_to_know/#diffie-hellman-parameters">respond to requests</a>, please
+be a little bit patient. If you change any of the config files after the
+container is ready, you can just
+<a href="docs/advanced_usage/#manualforce-renewal">send in a <code>SIGHUP</code></a> to tell
+the scripts and Nginx to reload everything.</p>
+<div class="highlight"><pre><span></span><code>docker <span class="nb">kill</span> --signal<span class="o">=</span>HUP &lt;container_name&gt;
+</code></pre></div>
+<h2 id="docker-compose">运行 <code>docker-compose</code><a class="headerlink" href="#docker-compose" title="Permanent link">&para;</a></h2>
+<p>An example of a <a href="examples/docker-compose.yml"><code>docker-compose.yaml</code></a> file can
+be found in the <a href="./examples"><code>examples/</code></a> folder. The default parameters that
+are found inside the <a href="examples/nginx-certbot.env"><code>nginx-certbot.env</code></a> file
+will be overwritten by any environment variables you set inside the <code>.yaml</code>
+file.</p>
+<blockquote>
+<p>NOTE: You can use both <code>environment:</code> and <code>env_file:</code> together or only one</p>
+</blockquote>
+<pre><code>    of them, the only requirement is that `CERTBOT_EMAIL` is defined
+    somewhere.
+</code></pre>
+<p>Like in the example above, you just need to place your custom server configs
+inside your <a href="docs/good_to_know/#the-user_confd-folder"><code>user_conf.d/</code></a>
+folder beforehand. Then you start it all with the following command.</p>
+<div class="highlight"><pre><span></span><code>docker-compose up
+</code></pre></div>
+<h2 id="_9">自己构建<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>如果你制作了自己的<code>Dockerfile</code>，这个选项是适用的。
+在<a href="docs/dockerhub_tags/">本文档</a>或<a href="https://hub.docker.com/r/jonasal/nginx-certbot">Docker Hub</a>上查看哪些标记可用，然后选择您想要的具体程度。</p>
+<p>在这种情况下，完全可以跳过[<code>user_conf.d/</code>]文件夹，直接将文件写入 Nginx 的<code>conf.d/</code>文件夹。
+通过这种方式，您可以用自己的文件替换我构建的<a href="./src/nginx_conf.d/">到映像</a>。
+但是，如果您这样做，请花点时间来理解它们是做什么的，以及为了让 certbot 继续工作，您需要包括什么。</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">jonasal/nginx-certbot:latest</span>
+<span class="k">COPY</span><span class="w"> </span>conf.d/* /etc/nginx/conf.d/
+</code></pre></div>
+<h1 id="_10">测试<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<p>我们使用<a href="https://github.com/bats-core/bats-core">BATS</a>来测试这个代码库的部分内容。
+运行所有测试的最简单方法是在此存储库的根目录中执行以下命令:</p>
+<div class="highlight"><pre><span></span><code>docker run -it --rm -v <span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">:/workdir&quot;</span> ffurrer/bats:latest ./tests
+</code></pre></div>
+<h2 id="_11">更多的资源<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>这里是其他资源的链接集合，可以提供有用的信息。</p>
+<ul>
+<li><a href="docs/good_to_know/">Good to Know</a>: 了解这个图像和它提供的功能有很多好处。</li>
+<li><a href="docs/changelog/">Changelog</a>: 此存储库的所有标记版本的列表，以及各个版本之间发生变化的项目符号。</li>
+<li><a href="docs/dockerhub_tags/">DockerHub Tags</a>: Docker Hub 提供的所有标记。</li>
+<li><a href="docs/advanced_usage/">Advanced Usage</a>: 有关此映像提供的更高级功能的信息。</li>
+<li><a href="docs/certbot_authenticators/">Certbot Authenticators</a>: 关于此映像中可用的不同身份验证器的信息。</li>
+<li><a href="docs/nginx_tips/">Nginx Tips</a>: 一些关于如何配置 Nginx 的有趣提示。</li>
+</ul>
+<h2 id="_12">外部指南<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>Here is a list of projects that use this image in various creative ways. Take
+a look and see if one of these helps or inspires you to do something similar:</p>
+<ul>
+<li><a href="https://efraim-rodrigues.medium.com/using-docker-to-containerize-your-node-js-aefcd1ecd37d">A <code>Node.js</code> application served over HTTPS in AWS Elastic Beanstalk</a></li>
+<li><a href="https://www.snopekgames.com/tutorial/2021/how-host-nakama-server-10mo">Host your own <code>Nakama</code> server</a></li>
+</ul>
+<h2 id="_13">致谢及感谢<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>This container requests SSL certificates from <a href="https://letsencrypt.org/">Let's Encrypt</a>, with the help
+of their <a href="https://github.com/certbot/certbot"><em>certbot</em></a> script, which they provide for the absolutely bargain
+price of free! If you like what they do, please <a href="https://letsencrypt.org/donate/">donate</a>.</p>
+<p>This repository was originally forked from <a href="https://github.com/henridwyer/docker-letsencrypt-cron"><code>@henridwyer</code></a> by
+<a href="https://github.com/staticfloat/docker-nginx-certbot"><code>@staticfloat</code></a>, before it was forked again by me. However, the changes to
+the code has since become so significant that this has now been detached as its
+own independent repository (while still retaining all the history). Migration
+instructions, from <code>@staticfloat</code>'s image, can be found
+<a href="docs/good_to_know/#help-migrating-from-staticfloats-image">here</a>.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../certbot/what/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 什么是证书" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              什么是证书
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="docs/good_to_know/" class="md-footer__link md-footer__link--next" aria-label="Next: 详细介绍" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              详细介绍
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      版权所有 © 2022 Knative Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/KnativeProject" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/knative/community" target="_blank" rel="noopener" title="Knative Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://slack.knative.dev" target="_blank" rel="noopener" title="Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>

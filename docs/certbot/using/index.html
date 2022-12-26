@@ -1,0 +1,2165 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Let’s Encrypt 文档">
+      
+      
+      
+        <link rel="canonical" href="https://knative.dev/docs/certbot/using/">
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>手册 - Let’s Encrypt</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Let’s Encrypt" class="md-header__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Let’s Encrypt
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              手册
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      主页
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../instructions/" class="md-tabs__link md-tabs__link--active">
+        Certbot
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../docker-nginx-certbot/" class="md-tabs__link">
+        docker-nginx-certbot
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Let’s Encrypt" class="md-nav__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    Let’s Encrypt
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instructions/" class="md-nav__link">
+        说明
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          手册
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        手册
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#certbot" class="md-nav__link">
+    Certbot 命令
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    获得证书(并选择插件)
+  </a>
+  
+    <nav class="md-nav" aria-label="获得证书(并选择插件)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apache" class="md-nav__link">
+    Apache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webroot" class="md-nav__link">
+    Webroot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    Nginx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standalone" class="md-nav__link">
+    Standalone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns" class="md-nav__link">
+    DNS 插件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    手动
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    组合插件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    第三方插件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    管理证书
+  </a>
+  
+    <nav class="md-nav" aria-label="管理证书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    重新创建和更新已有证书
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    更改证书的域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsa-ecdsa" class="md-nav__link">
+    RSA 和 ECDSA 钥匙
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    撤销证书
+  </a>
+  
+    <nav class="md-nav" aria-label="撤销证书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    删除证书
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    更新的证书
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    修改已有证书的更新配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    自动更新
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    我的证书在哪里?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    前和后验证挂钩
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acme" class="md-nav__link">
+    更改 ACME 服务器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    锁文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    配置文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    日志轮转
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#certbot_1" class="md-nav__link">
+    Certbot 命令行选项
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    得到帮助
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../help/" class="md-nav__link">
+        帮助
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        术语
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../what/" class="md-nav__link">
+        什么是证书
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          docker-nginx-certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="docker-nginx-certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          docker-nginx-certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/" class="md-nav__link">
+        入门手册
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/docs/good_to_know/" class="md-nav__link">
+        详细介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/docs/advanced_usage/" class="md-nav__link">
+        高级用法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/docs/certbot_authenticators/" class="md-nav__link">
+        DNS验证器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/docs/nginx_tips/" class="md-nav__link">
+        Nginx提示
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/docs/dockerhub_tags/" class="md-nav__link">
+        DockerHub标签
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-nginx-certbot/docs/changelog/" class="md-nav__link">
+        更新日志
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#certbot" class="md-nav__link">
+    Certbot 命令
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    获得证书(并选择插件)
+  </a>
+  
+    <nav class="md-nav" aria-label="获得证书(并选择插件)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apache" class="md-nav__link">
+    Apache
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webroot" class="md-nav__link">
+    Webroot
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nginx" class="md-nav__link">
+    Nginx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standalone" class="md-nav__link">
+    Standalone
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns" class="md-nav__link">
+    DNS 插件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    手动
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    组合插件
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    第三方插件
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    管理证书
+  </a>
+  
+    <nav class="md-nav" aria-label="管理证书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    重新创建和更新已有证书
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    更改证书的域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsa-ecdsa" class="md-nav__link">
+    RSA 和 ECDSA 钥匙
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    撤销证书
+  </a>
+  
+    <nav class="md-nav" aria-label="撤销证书">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    删除证书
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    更新的证书
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    修改已有证书的更新配置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    自动更新
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    我的证书在哪里?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    前和后验证挂钩
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acme" class="md-nav__link">
+    更改 ACME 服务器
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    锁文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    配置文件
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    日志轮转
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#certbot_1" class="md-nav__link">
+    Certbot 命令行选项
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    得到帮助
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/wdk-docs/letsencrypt-docs/edit/main/docs/certbot/using.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="_1">用户手册<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="certbot">Certbot 命令<a class="headerlink" href="#certbot" title="Permanent link">&para;</a></h2>
+<p>Certbot 使用许多不同的命令(也称为“子命令”)来请求特定的操作，如获取、更新或撤销证书。
+本文档将讨论最重要和最常用的命令;一个详尽的列表也出现在文档的末尾。</p>
+<p>如果您的系统使用较旧的包，web 服务器上的“certbot”脚本可能被命名为“letsencrypt”。
+在整个文档中，无论何时看到“certbot”，请根据需要替换正确的名称。</p>
+<h2 id="_2">获得证书(并选择插件)<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>Certbot 帮助你完成两个任务:</p>
+<ol>
+<li>获取证书:自动执行所需的身份验证步骤以证明您控制了域，将证书保存到“/etc/letsencrypt/live/”并定期更新。</li>
+<li>可选地，将该证书安装到受支持的 web 服务器(如 Apache 或 nginx)和其他类型的服务器。为了使用证书，可以自动修改服务器的配置。</li>
+</ol>
+<p>要获取证书并安装它，请使用<code>certbot run</code>命令(或<code>certbot</code>，两者是相同的)。</p>
+<p>如果只获取证书而不将其安装到任何地方，可以使用<code>certbot certonly</code> ("certificate only")命令。</p>
+<div class="admonition example">
+<p class="admonition-title">一些使用 Certbot 的例子</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 获取并安装证书:</span>
+certbot
+
+<span class="c1"># 获取证书但不安装:</span>
+certbot certonly
+
+<span class="c1"># 您可以使用-d指定多个域，并通过多次运行Certbot来获取和安装不同的证书:</span>
+certbot certonly -d example.com -d www.example.com
+certbot certonly -d app.example.com -d api.example.com
+</code></pre></div>
+</div>
+<p>要执行这些任务，Certbot 将要求您从身份验证器和安装程序插件中进行选择。
+适当的插件选择将取决于您正在运行的服务器软件类型以及计划使用证书的服务器软件类型。</p>
+<p><strong>身份验证器</strong>是自动执行所需步骤以证明您控制了您试图请求证书的域名的插件。验证者总是需要获得证书。</p>
+<p><strong>安装程序</strong>是可以使用 Certbot 获得的证书自动修改您的 web 服务器配置以通过 HTTPS 服务您的网站的插件。
+只有当您希望 Certbot 将证书安装到 web 服务器时，才需要安装程序。</p>
+<p>有些插件同时是验证器和安装器，可以指定验证器和插件的不同<a href="#combination">组合</a>。</p>
+<table>
+<thead>
+<tr>
+<th>插件</th>
+<th>Auth</th>
+<th>Inst</th>
+<th>解释</th>
+<th>挑战类型(和端口)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#apache">apache</a></td>
+<td>Y</td>
+<td>Y</td>
+<td>使用 Apache 自动获取和安装证书。</td>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.3">http-01</a> (80)</td>
+</tr>
+<tr>
+<td><a href="#nginx">nginx</a></td>
+<td>Y</td>
+<td>Y</td>
+<td>使用 Nginx 自动获取和安装证书。</td>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.3">http-01</a> (80)</td>
+</tr>
+<tr>
+<td><a href="#webroot">webroot</a></td>
+<td>Y</td>
+<td>N</td>
+<td>通过写入已经运行的 web 服务器的 webroot 目录来获取证书。</td>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.3">http-01</a> (80)</td>
+</tr>
+<tr>
+<td><a href="#standalone">standalone</a></td>
+<td>Y</td>
+<td>N</td>
+<td>使用"standalone" web 服务器获取证书。要求端口 80 可用。这在没有 web 服务器的系统中很有用，或者在不支持或不需要直接与本地 web 服务器集成的情况下很有用。</td>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.3">http-01</a> (80)</td>
+</tr>
+<tr>
+<td><a href="#dns_plugins">dns plugs</a></td>
+<td>Y</td>
+<td>N</td>
+<td>这类插件通过修改 DNS 记录来自动获取证书，以证明您拥有对域的控制权。以这种方式进行域验证是从 Let's Encrypt 获得通配符证书的唯一方法。</td>
+<td><a href="dns-01">dns-01</a> (53)</td>
+</tr>
+<tr>
+<td><a href="#manual">manual</a></td>
+<td>Y</td>
+<td>N</td>
+<td>根据说明手动获取证书，自行执行域验证。以这种方式创建的证书不支持自动更新。自动更新可以通过提供一个身份验证钩子脚本来实现域验证步骤的自动化。</td>
+<td><a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.3">http-01</a> (80) or <a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.4">dns-01</a>(53)</td>
+</tr>
+</tbody>
+</table>
+<p>在底层，插件使用几个 ACME 协议挑战之一来证明您控制了一个域名。
+选项是 <a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.3">http-01</a>(使用端口 80)和 <a href="https://datatracker.ietf.org/doc/html/rfc8555#section-8.4">dns-01</a>(需要在端口 53 上配置 DNS 服务器，尽管这通常不是您的 web 服务器的同一台机器)。
+一些插件支持多种挑战类型，在这种情况下，你可以选择一个带有<code>--preferred-challenges</code>的。</p>
+<p>还有许多<a href="#third-party-plugins">第三方插件</a>可用。
+下面我们将更详细地描述每个插件可以使用的情况，以及如何使用它。</p>
+<h3 id="apache">Apache<a class="headerlink" href="#apache" title="Permanent link">&para;</a></h3>
+<p>Apache 插件目前<a href="https://github.com/certbot/certbot/blob/master/certbot-apache/certbot_apache/_internal/entrypoint.py">支持</a>基于 Debian、Fedora、SUSE、Gentoo、CentOS 和 Darwin 的现代操作系统。
+这将自动在 Apache web 服务器上获取和安装证书。
+要在命令行上指定这个插件，只需包含<code>--apache</code>。</p>
+<h3 id="webroot">Webroot<a class="headerlink" href="#webroot" title="Permanent link">&para;</a></h3>
+<p>如果你正在运行一个本地 web 服务器，你有能力修改所服务的内容，并且你不希望在证书颁发过程中停止 web 服务器，你可以使用 webroot 插件通过在命令行中包含<code>certonly</code> and <code>--webroot</code>来获取证书。
+此外，你需要指定<code>--webroot-path</code> or <code>-w</code>与顶级目录("web root")，其中包含你的 web 服务器提供的文件。
+例如，<code>--webroot-path /var/www/html</code> or <code>--webroot-path /usr/share/nginx/html</code>是两种常见的 webroot 路径。</p>
+<p>如果您要同时获得多个域的证书，插件需要知道每个域的文件是从哪里提供的，这可能是每个域的单独目录。
+当为多个域请求证书时，每个域将使用最近指定的<code>--webroot-path</code>。举个例子，</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --webroot -w /var/www/example -d www.example.com -d example.com -w /var/www/other -d other.example.net -d another.other.example.net
+</code></pre></div>
+<p>would obtain a single certificate for all of those names, using the <code>/var/www/example</code> webroot directory for the first two, and <code>/var/www/other</code> for the second two.</p>
+<p>The webroot plugin works by creating a temporary file for each of your requested domains in <code>${webroot-path}/.well-known/acme-challenge</code>.
+Then the Let's Encrypt validation server makes HTTP requests to validate that the DNS for each requested domain resolves to the server running certbot.
+An example request made to your web server would look like:</p>
+<div class="highlight"><pre><span></span><code>66.133.109.36 - - [05/Jan/2016:20:11:24 -0500] &quot;GET /.well-known/acme-challenge/HGr8U1IeTW4kY_Z6UIyaakzOkyQgPr_7ArlLgtZE8SX HTTP/1.1&quot; 200 87 &quot;-&quot; &quot;Mozilla/5.0 (compatible; Let&#39;s Encrypt validation server; +https://www.letsencrypt.org)&quot;
+</code></pre></div>
+<p>Note that to use the webroot plugin, your server must be configured to serve files from hidden directories.
+If <code>/.well-known</code> is treated specially by your webserver configuration, you might need to modify the configuration to ensure that files inside <code>/.well-known/acme-challenge</code> are served by the webserver.</p>
+<p>Under Windows, Certbot will generate a <code>web.config</code> file, if one does not already exist, in <code>/.well-known/acme-challenge</code> in order to let IIS serve the challenge files even if they do not have an extension.</p>
+<h3 id="nginx">Nginx<a class="headerlink" href="#nginx" title="Permanent link">&para;</a></h3>
+<p>Nginx 插件应该适用于大多数配置。
+我们建议在使用 Nginx 之前备份它的配置(尽管你也可以使用<code>certbot --nginx rollback</code>将更改恢复到配置)。
+你可以通过在命令行上提供<code>--nginx</code>标志来使用它。</p>
+<div class="highlight"><pre><span></span><code>certbot --nginx
+</code></pre></div>
+<p><a id="standalone"></a></p>
+<h3 id="standalone">Standalone<a class="headerlink" href="#standalone" title="Permanent link">&para;</a></h3>
+<p>如果不想使用(或目前没有)现有服务器软件，请使用独立模式获取证书。
+独立插件不依赖于在您获取证书的机器上运行的任何其他服务器软件。</p>
+<p>要使用“独立”web 服务器获取证书，您可以通过在命令行中包含<code>certonly</code>和<code>——standalone</code>来使用独立插件。
+这个插件需要绑定到端口 80 来执行域验证，所以你可能需要停止你现有的 web 服务器。</p>
+<p>您的机器必须仍然可以使用每个请求的域名在指定端口上接受来自 Internet 的入站连接。</p>
+<p>默认情况下，Certbot 首先尝试使用 IPv6 绑定到所有接口的端口，然后使用 IPv4 绑定到该端口;只要至少有一个绑定成功，Certbot 就会继续。在大多数 Linux 系统上，IPv4 流量将被路由到绑定的 IPv6 端口，在第二次绑定期间失败是意料之中的。</p>
+<p>使用<code>--&lt;challenge-type&gt;-address</code>显式告诉 Certbot 绑定哪个接口(和协议)。</p>
+<p><a id="dns_plugins"></a></p>
+<h3 id="dns">DNS 插件<a class="headerlink" href="#dns" title="Permanent link">&para;</a></h3>
+<p>如果你想从 Let's Encrypt 获得一个通配符证书，或者在目标服务器以外的机器上运行“certbot”，你可以使用 certbot 的 DNS 插件之一。</p>
+<p>这些插件不包含在默认的 Certbot 安装中，必须单独安装。
+它们可以作为 Docker 映像和快照在许多 OS 包管理器中使用。
+访问 <a href="https://certbot.eff.org">https://certbot.eff.org</a> 了解在您的系统上使用 DNS 插件的最佳方法。</p>
+<p>安装完成后，你可以在以下地址找到如何使用每个插件的文档:</p>
+<ul>
+<li><a href="https://certbot-dns-cloudflare.readthedocs.io">certbot-dns-cloudflare</a></li>
+<li><a href="https://certbot-dns-digitalocean.readthedocs.io">certbot-dns-digitalocean</a></li>
+<li><a href="https://certbot-dns-dnsimple.readthedocs.io">certbot-dns-dnsimple</a></li>
+<li><a href="https://certbot-dns-dnsmadeeasy.readthedocs.io">certbot-dns-dnsmadeeasy</a></li>
+<li><a href="https://certbot-dns-gehirn.readthedocs.io">certbot-dns-gehirn</a></li>
+<li><a href="https://certbot-dns-google.readthedocs.io">certbot-dns-google</a></li>
+<li><a href="https://certbot-dns-linode.readthedocs.io">certbot-dns-linode</a></li>
+<li><a href="https://certbot-dns-luadns.readthedocs.io">certbot-dns-luadns</a></li>
+<li><a href="https://certbot-dns-nsone.readthedocs.io">certbot-dns-nsone</a></li>
+<li><a href="https://certbot-dns-ovh.readthedocs.io">certbot-dns-ovh</a></li>
+<li><a href="https://certbot-dns-rfc2136.readthedocs.io">certbot-dns-rfc2136</a></li>
+<li><a href="https://certbot-dns-route53.readthedocs.io">certbot-dns-route53</a></li>
+<li><a href="https://certbot-dns-sakuracloud.readthedocs.io">certbot-dns-sakuracloud</a></li>
+</ul>
+<p><a id="manual"></a></p>
+<h3 id="_3">手动<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>如果你想在目标服务器以外的机器上获得运行<code>certbot</code>的证书，或者自己执行域验证的步骤，你可以使用手动插件。
+虽然隐藏在 UI 中，但您可以使用插件通过在命令行上指定<code>certonly</code> 和 <code>--manual</code>来获取证书。
+这要求您将命令复制并粘贴到另一个终端会话中，该会话可能位于不同的计算机上。</p>
+<p>手动插件可以使用<code>http</code> or <code>dns</code>挑战。您可以使用<code>--preferred-challenges</code>选项来选择您喜欢的挑战。</p>
+<p><code>http</code> 挑战将要求您将具有特定名称和特定内容的文件直接放置在顶级目录(“web root”)的目录中，该目录包含您的 web 服务器提供的文件。
+本质上它和<a href="#webroot">webroot</a>插件是一样的，但不是自动化的。</p>
+<p>当使用<code>dns</code>挑战时，<code>certbot</code>会要求你在域名下放置一个包含特定内容的 TXT DNS 记录，该记录由你想要颁发证书的主机名组成，以<code>_acme-challenge</code>为前缀。</p>
+<div class="admonition example">
+<p class="admonition-title">对于域名<code>example.com</code>，区域文件条目看起来是这样的</p>
+<p>_acme-challenge.example.com. 300 IN TXT "gfj9Xq...Rg85nM"</p>
+</div>
+<p><a id="manual-renewal"></a></p>
+<p><strong>使用手动插件更新</strong></p>
+<p>使用<code>--manual</code> 创建的证书<strong>不</strong>支持自动更新，除非通过<code>--manual-auth-hook</code>与<a href="#hooks">认证钩子脚本</a>结合使用，以自动设置所需的 HTTP 和/或 TXT 挑战。</p>
+<p>如果您可以使用其他支持自动更新的<a href="#plugins">插件</a>来创建证书，强烈建议您这样做。</p>
+<p>如果要手动更新不带钩子的<code>--manual</code>证书，请重复最初创建证书时使用的<code>certbot --manual</code>命令。
+由于这需要复制和粘贴新的 HTTP 文件或 DNS TXT 记录，因此 cron 作业不能自动执行该命令。</p>
+<p><a id="combination"></a></p>
+<h3 id="_4">组合插件<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>有时您可能希望指定不同的验证程序和安装程序插件的组合。
+为此，使用<code>--authenticator</code> 或 <code>-a</code> 指定验证程序插件，使用<code>--installer</code> 或 <code>-i</code>指定安装程序插件。</p>
+<p>例如，您可以使用<a href="#webroot">webroot</a>插件进行身份验证，使用<a href="#apache">apache</a>插件进行安装来创建证书。</p>
+<div class="highlight"><pre><span></span><code>certbot run -a webroot -i apache -w /var/www/html -d example.com
+</code></pre></div>
+<p>或者你可以使用手动插件进行身份验证，使用<a href="nginx">nginx</a>插件进行安装来创建证书。(注意此证书不能自动更新。)</p>
+<div class="highlight"><pre><span></span><code>certbot run -a manual -i nginx -d example.com
+</code></pre></div>
+<p><a id="third-party-plugins"></a></p>
+<h3 id="_5">第三方插件<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>还有许多第三方插件，由其他开发人员提供。许多是测试版/试验性的，但有些已经被广泛使用:</p>
+<table>
+<thead>
+<tr>
+<th>Plugin</th>
+<th>Auth</th>
+<th>Inst</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/greenhost/certbot-haproxy">haproxy</a></td>
+<td>Y</td>
+<td>Y</td>
+<td>Integration with the HAProxy load balancer</td>
+</tr>
+<tr>
+<td><a href="https://github.com/dlapiduz/letsencrypt-s3front">s3front</a></td>
+<td>Y</td>
+<td>Y</td>
+<td>Integration with Amazon CloudFront distribution of S3 buckets</td>
+</tr>
+<tr>
+<td><a href="https://github.com/obynio/certbot-plugin-gandi">gandi</a></td>
+<td>Y</td>
+<td>N</td>
+<td>Obtain certificates via the Gandi LiveDNS API</td>
+</tr>
+<tr>
+<td><a href="https://git.sesse.net/?p=letsencrypt-varnish-plugin">varnish</a></td>
+<td>Y</td>
+<td>N</td>
+<td>Obtain certificates via a Varnish server</td>
+</tr>
+<tr>
+<td><a href="https://github.com/EnigmaBridge/certbot-external-auth">external-auth</a></td>
+<td>Y</td>
+<td>Y</td>
+<td>A plugin for convenient scripting</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kharkevich/letsencrypt-pritunl">pritunl</a></td>
+<td>N</td>
+<td>Y</td>
+<td>Install certificates in pritunl distributed OpenVPN servers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kharkevich/letsencrypt-proxmox">proxmox</a></td>
+<td>N</td>
+<td>Y</td>
+<td>Install certificates in Proxmox Virtualization servers</td>
+</tr>
+<tr>
+<td><a href="https://github.com/siilike/certbot-dns-standalone">dns-standalone</a></td>
+<td>Y</td>
+<td>N</td>
+<td>Obtain certificates via an integrated DNS server</td>
+</tr>
+<tr>
+<td><a href="https://github.com/m42e/certbot-dns-ispconfig">dns-ispconfig</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using ISPConfig as DNS server</td>
+</tr>
+<tr>
+<td><a href="https://github.com/vshosting/certbot-dns-clouddns">dns-clouddns</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using CloudDNS API</td>
+</tr>
+<tr>
+<td><a href="https://github.com/noi/certbot-dns-lightsail">dns-lightsail</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using Amazon Lightsail DNS API</td>
+</tr>
+<tr>
+<td><a href="https://github.com/oGGy990/certbot-dns-inwx/">dns-inwx</a></td>
+<td>Y</td>
+<td>Y</td>
+<td>DNS Authentication for INWX through the XML API</td>
+</tr>
+<tr>
+<td><a href="https://github.com/binkhq/certbot-dns-azure">dns-azure</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using Azure DNS</td>
+</tr>
+<tr>
+<td><a href="https://github.com/miigotu/certbot-dns-godaddy">dns-godaddy</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using Godaddy DNS</td>
+</tr>
+<tr>
+<td><a href="https://github.com/PykupeJIbc/certbot-dns-yandexcloud">dns-yandexcloud</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using Yandex Cloud DNS</td>
+</tr>
+<tr>
+<td><a href="https://github.com/mwt/certbot-dns-bunny">dns-bunny</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using BunnyDNS</td>
+</tr>
+<tr>
+<td><a href="https://github.com/chaptergy/certbot-dns-njalla">njalla</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication for njalla</td>
+</tr>
+<tr>
+<td><a href="https://github.com/infinityofspace/certbot_dns_duckdns">DuckDNS</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication for DuckDNS</td>
+</tr>
+<tr>
+<td><a href="https://github.com/infinityofspace/certbot_dns_porkbun">Porkbun</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication for Porkbun</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Infomaniak/certbot-dns-infomaniak">Infomaniak</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS Authentication using Infomaniak Domains API</td>
+</tr>
+<tr>
+<td><a href="https://github.com/alexzorin/certbot-dns-multi">dns-multi</a></td>
+<td>Y</td>
+<td>N</td>
+<td>DNS authentication of 100+ providers using go-acme/lego</td>
+</tr>
+</tbody>
+</table>
+<p>如果你感兴趣，你也可以<a href="#dev-plugin">编写自己的插件</a>.</p>
+<p><a id="managing-certs"></a></p>
+<h2 id="_6">管理证书<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>要查看 Certbot 知道的证书列表，运行<code>certificates</code>子命令:</p>
+<div class="highlight"><pre><span></span><code>certbot certificates
+</code></pre></div>
+<p>This returns information in the following format::</p>
+<div class="highlight"><pre><span></span><code>Found the following certificates:
+Certificate Name: example.com
+Domains: example.com, www.example.com
+Expiry Date: 2017-02-19 19:53:00+00:00 (VALID: 30 days)
+Certificate Path: /etc/letsencrypt/live/example.com/fullchain.pem
+Key Type: RSA
+Private Key Path: /etc/letsencrypt/live/example.com/privkey.pem
+</code></pre></div>
+<p><code>Certificate Name</code> shows the name of the certificate.
+Pass this name using the <code>--cert-name</code> flag to specify a particular certificate for the <code>run</code>, <code>certonly</code>, <code>certificates</code>, <code>renew</code>, and <code>delete</code> commands. Example::</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --cert-name example.com
+</code></pre></div>
+<p><a id="updating_certs"></a></p>
+<h3 id="_7">重新创建和更新已有证书<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>You can use <code>certonly</code> or <code>run</code> subcommands to request
+the creation of a single new certificate even if you already have an
+existing certificate with some of the same domain names.</p>
+<p>If a certificate is requested with <code>run</code> or <code>certonly</code> specifying a
+certificate name that already exists, Certbot updates
+the existing certificate. Otherwise a new certificate
+is created and assigned the specified name.</p>
+<p>The <code>--force-renewal</code>, <code>--duplicate</code>, and <code>--expand</code> options
+control Certbot's behavior when re-creating
+a certificate with the same name as an existing certificate.
+If you don't specify a requested behavior, Certbot may ask you what you intended.</p>
+<p><code>--force-renewal</code> tells Certbot to request a new certificate
+with the same domains as an existing certificate. Each domain
+must be explicitly specified via <code>-d</code>. If successful, this certificate
+is saved alongside the earlier one and symbolic links (the "<code>live</code>"
+reference) will be updated to point to the new certificate. This is a
+valid method of renewing a specific individual
+certificate.</p>
+<p><code>--duplicate</code> tells Certbot to create a separate, unrelated certificate
+with the same domains as an existing certificate. This certificate is
+saved completely separately from the prior one. Most users will not
+need to issue this command in normal circumstances.</p>
+<p><code>--expand</code> tells Certbot to update an existing certificate with a new
+certificate that contains all of the old domains and one or more additional
+new domains. With the <code>--expand</code> option, use the <code>-d</code> option to specify
+all existing domains and one or more new domains.</p>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code>certbot --expand -d existing.com,example.com,newdomain.com
+</code></pre></div>
+<p>If you prefer, you can specify the domains individually like this:</p>
+<div class="highlight"><pre><span></span><code>certbot --expand -d existing.com -d example.com -d newdomain.com
+</code></pre></div>
+<p>Consider using <code>--cert-name</code> instead of <code>--expand</code>, as it gives more control
+over which certificate is modified and it lets you remove domains as well as adding them.</p>
+<p><code>--allow-subset-of-names</code> tells Certbot to continue with certificate generation if
+only some of the specified domain authorizations can be obtained. This may
+be useful if some domains specified in a certificate no longer point at this
+system.</p>
+<p>Whenever you obtain a new certificate in any of these ways, the new
+certificate exists alongside any previously obtained certificates, whether
+or not the previous certificates have expired. The generation of a new
+certificate counts against several rate limits that are intended to prevent
+abuse of the ACME protocol, as described <a href="https://letsencrypt.org/docs/rate-limits/">here</a>.</p>
+<p><a id="changing"></a></p>
+<h3 id="_8">更改证书的域<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>The <code>--cert-name</code> flag can also be used to modify the domains a certificate contains,
+by specifying new domains using the <code>-d</code> or <code>--domains</code> flag. If certificate <code>example.com</code>
+previously contained <code>example.com</code> and <code>www.example.com</code>, it can be modified to only
+contain <code>example.com</code> by specifying only <code>example.com</code> with the <code>-d</code> or <code>--domains</code> flag. Example::</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --cert-name example.com -d example.com
+</code></pre></div>
+<p>The same format can be used to expand the set of domains a certificate contains, or to replace that set entirely::</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --cert-name example.com -d example.org,www.example.org
+</code></pre></div>
+<p><a id="using-ecdsa-keys"></a></p>
+<h3 id="rsa-ecdsa">RSA 和 ECDSA 钥匙<a class="headerlink" href="#rsa-ecdsa" title="Permanent link">&para;</a></h3>
+<p>Certbot supports two certificate private key algorithms: <code>rsa</code> and <code>ecdsa</code>.</p>
+<p>As of version 2.0.0, Certbot defaults to ECDSA <code>secp256r1</code> (P-256) certificate private keys
+for all new certificates. Existing certificates will continue to renew using their existing key
+type, unless a key type change is requested.</p>
+<p>The type of key used by Certbot can be controlled through the <code>--key-type</code> option.
+You can use the <code>--elliptic-curve</code> option to control the curve used in ECDSA
+certificates and the <code>--rsa-key-size</code> option to control the size of RSA keys.</p>
+<p>.. warning:: If you obtain certificates using ECDSA keys, you should be careful
+not to downgrade to a Certbot version earlier than 1.10.0 where ECDSA keys were
+not supported. Downgrades like this are possible if you switch from something like
+the snaps or pip to packages provided by your operating system which often lag behind.</p>
+<p>Changing a certificate's key type</p>
+<div class="highlight"><pre><span></span><code>Unless you are aware that you need to support very old HTTPS clients that are
+not supported by most sites, you can safely transition your site to use
+ECDSA keys instead of RSA keys.
+
+If you want to change a single certificate to use ECDSA keys, you&#39;ll need to
+create or renew a certificate while setting `--key-type ecdsa` on the command line:
+
+```shell
+  certbot renew --key-type ecdsa --cert-name example.com --force-renewal
+```
+
+If you want to use ECDSA keys for all certificates in the future (including renewals
+of existing certificates), you can add the following line to Certbot&#39;s
+:ref:`configuration file &lt;config-file&gt;`:
+
+``` ini
+  key-type = ecdsa
+</code></pre></div>
+<p>which will take effect upon the next renewal of each certificate.</p>
+<h2 id="_9">撤销证书<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>If you need to revoke a certificate, use the <code>revoke</code> subcommand to do so.</p>
+<p>A certificate may be revoked by providing its name (see <code>certbot certificates</code>) or by providing
+its path directly</p>
+<div class="highlight"><pre><span></span><code>  certbot revoke --cert-name example.com
+  certbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem
+</code></pre></div>
+<p>If the certificate being revoked was obtained via the <code>--staging</code>, <code>--test-cert</code> or a non-default <code>--server</code> flag,
+that flag must be passed to the <code>revoke</code> subcommand.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>After revocation, Certbot will (by default) ask whether you want to <strong>delete</strong> the certificate.
+Unless deleted, Certbot will try to renew revoked certificates the next time <code>certbot renew</code> runs.</p>
+</div>
+<p>You can also specify the reason for revoking your certificate by using the <code>reason</code> flag.
+Reasons include <code>unspecified</code> which is the default, as well as <code>keycompromise</code>, <code>affiliationchanged</code>, <code>superseded</code>, and <code>cessationofoperation</code></p>
+<div class="highlight"><pre><span></span><code>certbot revoke --cert-name example.com --reason keycompromise
+</code></pre></div>
+<p>Revoking by account key or certificate private key</p>
+<p>By default, Certbot will try revoke the certificate using your ACME account key. If the certificate was created from the same ACME account, the revocation will be successful.</p>
+<p>If you instead have the corresponding private key file to the certificate you wish to revoke, use <code>--key-path</code> to perform the revocation from any ACME account</p>
+<div class="highlight"><pre><span></span><code>certbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem --key-path /etc/letsencrypt/live/example.com/privkey.pem
+</code></pre></div>
+<p><a id="deleting"></a></p>
+<h3 id="_10">删除证书<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>If you need to delete a certificate, use the <code>delete</code> subcommand.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Read this and the <code>Safely deleting certificates</code>_ sections carefully. This is an irreversible operation and must be done with care.</p>
+</div>
+<p>Certbot does not automatically revoke a certificate before deleting it. If you're no longer using a certificate and don't
+plan to use it anywhere else, you may want to follow the instructions in <code>Revoking certificates</code>_ instead. Generally, there's
+no need to revoke a certificate if its private key has not been compromised, but you may still receive expiration emails
+from Let's Encrypt unless you revoke.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Do not manually delete certificate files from inside <code>/etc/letsencrypt/</code>. Always use the <code>delete</code> subcommand.</p>
+</div>
+<p>A certificate may be deleted by providing its name with <code>--cert-name</code>. 
+You may find its name using <code>certbot certificates</code>.</p>
+<p>Otherwise, you will be prompted to choose one or more certificates to delete</p>
+<div class="highlight"><pre><span></span><code>certbot delete --cert-name example.com
+
+<span class="c1">## or to choose from a list:</span>
+
+certbot delete
+
+Safely deleting certificates
+</code></pre></div>
+<p>Deleting a certificate without following the proper steps can result in a non-functioning server. To safely delete a
+certificate, follow all the steps below to make sure that references to a certificate are removed from the configuration
+of any installed server software (Apache, nginx, Postfix, etc) <em>before</em> deleting the certificate.</p>
+<p>To explain further, when installing a certificate, Certbot modifies Apache or nginx's configuration to load the certificate
+and its private key from the <code>/etc/letsencrypt/live/</code> directory. Before deleting a certificate, it is necessary to undo
+that modification, by removing any references to the certificate from the webserver's configuration files.</p>
+<p>Follow these steps to safely delete a certificate:</p>
+<ol>
+<li>Find all references to the certificate (substitute <code>example.com</code> in the command for the name of the certificate
+   you wish to delete)</li>
+</ol>
+<div class="highlight"><pre><span></span><code> sudo bash -c <span class="s1">&#39;grep -R live/example.com /etc/{nginx,httpd,apache2}&#39;</span>
+</code></pre></div>
+<p>If there are no references found, skip directly to Step 4.</p>
+<p>If some references are found, they will look something like</p>
+<div class="highlight"><pre><span></span><code>/etc/apache2/sites-available/000-default-le-ssl.conf:SSLCertificateFile /etc/letsencrypt/live/example.com/fullchain.pem
+/etc/apache2/sites-available/000-default-le-ssl.conf:SSLCertificateKeyFile /etc/letsencrypt/live/example.com/privkey.pem
+</code></pre></div>
+<ol>
+<li>You will need a self-signed certificate to replace the certificate you are deleting. The following command will generate one
+   for you, saving the certificate at <code>/etc/letsencrypt/self-signed-cert.pem</code> and its private key at <code>/etc/letsencrypt/self-signed-privkey.pem</code>
+   <div class="highlight"><pre><span></span><code> sudo openssl req -nodes -batch -x509 -newkey rsa:2048 -keyout /etc/letsencrypt/self-signed-privkey.pem -out /etc/letsencrypt/self-signed-cert.pem -days <span class="m">356</span>
+</code></pre></div></li>
+<li>For each reference found in Step 1, open the file in a text editor and replace the reference to the existing
+   certificate with a reference to the self-signed certificate.</li>
+</ol>
+<p>Continuing from the previous example, you would open <code>/etc/apache2/sites-available/000-default-le-ssl.conf</code> in a text editor
+   and modify the two matching lines of text to instead say</p>
+<div class="highlight"><pre><span></span><code> SSLCertificateFile /etc/letsencrypt/self-signed-cert.pem
+ SSLCertificateKeyFile /etc/letsencrypt/self-signed-privkey.pem
+</code></pre></div>
+<ol>
+<li>It is now safe to delete the certificate. Do so by running</li>
+</ol>
+<div class="highlight"><pre><span></span><code> sudo certbot delete --cert-name example.com
+</code></pre></div>
+<p><a id="renewal"></a></p>
+<h2 id="_11">更新的证书<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Let's Encrypt CA issues short-lived certificates (90 days). Make sure you renew the certificates at least once in 3 months.</p>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Most Certbot installations come with automatic renewal out of the box. See <code>Automated Renewals</code>_ for more details.</p>
+</div>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>Users of the <code>Manual</code><em> plugin should note that <code>--manual</code> certificates will not renew automatically, unless combined with authentication hook scripts.
+See <code>Renewal with the manual plugin &lt;#manual-renewal&gt;</code></em>.</p>
+</div>
+<p>As of version 0.10.0, Certbot supports a <code>renew</code> action to check all installed certificates for impending expiry and attempt to renew them.
+The simplest form is simply</p>
+<div class="highlight"><pre><span></span><code>certbot renew
+</code></pre></div>
+<p>This command attempts to renew any previously-obtained certificates that expire in less than 30 days.
+The same plugin and options that were used at the time the certificate was originally issued will be used for the
+renewal attempt, unless you specify other plugins or options. Unlike <code>certonly</code>, <code>renew</code> acts on
+multiple certificates and always takes into account whether each one is near
+expiry. Because of this, <code>renew</code> is suitable (and designed) for automated use,
+to allow your system to automatically renew each certificate when appropriate.
+Since <code>renew</code> only renews certificates that are near expiry it can be
+run as frequently as you want - since it will usually take no action.</p>
+<p>The <code>renew</code> command includes hooks for running commands or scripts before or after a certificate is
+renewed. For example, if you have a single certificate obtained using
+the standalone_ plugin, you might need to stop the webserver
+before renewing so standalone can bind to the necessary ports, and
+then restart it after the plugin is finished. Example::</p>
+<p>certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"</p>
+<p>If a hook exits with a non-zero exit code, the error will be printed
+to <code>stderr</code> but renewal will be attempted anyway. A failing hook
+doesn't directly cause Certbot to exit with a non-zero exit code, but
+since Certbot exits with a non-zero exit code when renewals fail, a
+failed hook causing renewal failures will indirectly result in a
+non-zero exit code. Hooks will only be run if a certificate is due for
+renewal, so you can run the above command frequently without
+unnecessarily stopping your webserver.</p>
+<p>When Certbot detects that a certificate is due for renewal, <code>--pre-hook</code>
+and <code>--post-hook</code> hooks run before and after each attempt to renew it.
+If you want your hook to run only after a successful renewal, use
+<code>--deploy-hook</code> in a command like this.</p>
+<p><code>certbot renew --deploy-hook /path/to/deploy-hook-script</code></p>
+<p>You can also specify hooks by placing files in subdirectories of Certbot's
+configuration directory. Assuming your configuration directory is
+<code>/etc/letsencrypt</code>, any executable files found in
+<code>/etc/letsencrypt/renewal-hooks/pre</code>,
+<code>/etc/letsencrypt/renewal-hooks/deploy</code>, and
+<code>/etc/letsencrypt/renewal-hooks/post</code> will be run as pre, deploy, and post
+hooks respectively when any certificate is renewed with the <code>renew</code>
+subcommand. These hooks are run in alphabetical order and are not run for other
+subcommands. (The order the hooks are run is determined by the byte value of
+the characters in their filenames and is not dependent on your locale.)</p>
+<p>Hooks specified in the command line, :ref:<code>configuration file
+&lt;config-file&gt;</code>, or :ref:<code>renewal configuration files &lt;renewal-config-file&gt;</code> are
+run as usual after running all hooks in these directories. One minor exception
+to this is if a hook specified elsewhere is simply the path to an executable
+file in the hook directory of the same type (e.g. your pre-hook is the path to
+an executable in <code>/etc/letsencrypt/renewal-hooks/pre</code>), the file is not run a
+second time. You can stop Certbot from automatically running executables found
+in these directories by including <code>--no-directory-hooks</code> on the command line.</p>
+<p>More information about hooks can be found by running
+<code>certbot --help renew</code>.</p>
+<p>If you're sure that this command executes successfully without human
+intervention, you can add the command to <code>crontab</code> (since certificates
+are only renewed when they're determined to be near expiry, the command
+can run on a regular basis, like every week or every day). In that case,
+you are likely to want to use the <code>-q</code> or <code>--quiet</code> quiet flag to
+silence all output except errors.</p>
+<p>If you are manually renewing all of your certificates, the
+<code>--force-renewal</code> flag may be helpful; it causes the expiration time of
+the certificate(s) to be ignored when considering renewal, and attempts to
+renew each and every installed certificate regardless of its age. (This
+form is not appropriate to run daily because each certificate will be
+renewed every day, which will quickly run into the certificate authority
+rate limit.)</p>
+<p>Note that options provided to <code>certbot renew</code> will apply to
+<em>every</em> certificate for which renewal is attempted; for example,
+<code>certbot renew --rsa-key-size 4096</code> would try to replace every
+near-expiry certificate with an equivalent certificate using a 4096-bit
+RSA public key. If a certificate is successfully renewed using
+specified options, those options will be saved and used for future
+renewals of that certificate.</p>
+<p>An alternative form that provides for more fine-grained control over the
+renewal process (while renewing specified certificates one at a time),
+is <code>certbot certonly</code> with the complete set of subject domains of
+a specific certificate specified via <code>-d</code> flags. You may also want to
+include the <code>-n</code> or <code>--noninteractive</code> flag to prevent blocking on
+user input (which is useful when running the command from cron).</p>
+<p><code>certbot certonly -n -d example.com -d www.example.com</code></p>
+<p>All of the domains covered by the certificate must be specified in
+this case in order to renew and replace the old certificate rather
+than obtaining a new one; don't forget any <code>www.</code> domains! Specifying
+a subset of the domains creates a new, separate certificate containing
+only those domains, rather than replacing the original certificate.
+When run with a set of domains corresponding to an existing certificate,
+the <code>certonly</code> command attempts to renew that specific certificate.</p>
+<p>Please note that the CA will send notification emails to the address
+you provide if you do not renew certificates that are about to expire.</p>
+<p>Certbot is working hard to improve the renewal process, and we
+apologize for any inconvenience you encounter in integrating these
+commands into your individual environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>certbot renew</code> exit status will only be 1 if a renewal attempt failed.</p>
+</div>
+<p>This means <code>certbot renew</code> exit status will be 0 if no certificate needs to be updated.
+If you write a custom script and expect to run a command only after a certificate was actually renewed
+you will need to use the <code>--deploy-hook</code> since the exit status will be 0 both on successful renewal
+and when renewal is not necessary.</p>
+<p>.. _renewal-config-file:
+.. _Modifying the Renewal Configuration File:</p>
+<h2 id="_12">修改已有证书的更新配置<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>When creating a certificate, Certbot will keep track of all of the relevant options chosen by the user. At renewal
+time, Certbot will remember these options and apply them once again.</p>
+<p>Sometimes, you may encounter the need to change some of these options for future certificate renewals. To achieve this,
+you will need to perform the following steps:</p>
+<ol>
+<li>Perform a <em>dry run renewal</em> with the amended options on the command line. This allows you to confirm that the change
+   is valid and will result in successful future renewals.</li>
+<li>If the dry run is successful, perform a <em>live renewal</em> of the certificate. This will persist the change for future
+   renewals. If the certificate is not yet due to expire, you will need to force a renewal using <code>--force-renewal</code>.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Rate limits from the certificate authority may prevent you from performing multiple renewals in a short</p>
+</div>
+<p>period of time. It is strongly recommended to perform the second step only once, when you have decided on what
+options should change.</p>
+<p>As a practical example, if you were using the <code>webroot</code> authenticator and had relocated your website to another directory,
+you would need to change the <code>--webroot-path</code> to the new directory. Following the above advice:</p>
+<ol>
+<li>Perform a <em>dry-run renewal</em> of the individual certificate with the amended options::
+   <div class="highlight"><pre><span></span><code> certbot renew --cert-name example.com --webroot-path /path/to/new/location --dry-run
+</code></pre></div></li>
+<li>If the dry-run was successful, make the change permanent by performing a <em>live renewal</em> of the certificate with the
+   amended options, including <code>--force-renewal</code>::</li>
+</ol>
+<div class="highlight"><pre><span></span><code> certbot renew --cert-name example.com --webroot-path /path/to/new/location --force-renewal
+</code></pre></div>
+<p><code>--cert-name</code> selects the particular certificate to be modified. Without this option, all certificates will be selected.</p>
+<p><code>--webroot-path</code> is the option intended to be changed. All other previously selected options will be kept the same
+   and do not need to be included in the command.</p>
+<p>For advanced certificate management tasks, it is also possible to manually modify the certificate's renewal configuration
+file, but this is discouraged since it can easily break Certbot's ability to renew your certificates. These renewal
+configuration files are located at <code>/etc/letsencrypt/renewal/CERTNAME.conf</code>. If you choose to modify the renewal
+configuration file we advise you to make a backup of the file beforehand and test its validity with the <code>certbot renew --dry-run</code> command.</p>
+<p>.. warning:: Manually modifying files under <code>/etc/letsencrypt/renewal/</code> can damage them if done improperly and we do not recommend doing so.</p>
+<h2 id="_13">自动更新<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>Most Certbot installations come with automatic renewals preconfigured. This
+is done by means of a scheduled task which runs <code>certbot renew</code> periodically.</p>
+<p>If you are unsure whether you need to configure automated renewal:</p>
+<ol>
+<li>Review the instructions for your system and installation method at
+   https://certbot.eff.org/instructions. They will describe how to set up a scheduled task,
+   if necessary. If no step is listed, your system comes with automated renewal pre-installed,
+   and you should not need to take any additional actions.</li>
+<li>On Linux and BSD, you can check to see if your installation method has pre-installed a timer
+   for you. To do so, look for the <code>certbot renew</code> command in either your system's crontab
+   (typically <code>/etc/crontab</code> or <code>/etc/cron.*/*</code>) or systemd timers (<code>systemctl list-timers</code>).</li>
+<li>If you're still not sure, you can configure automated renewal manually by following the steps
+   in the next section. Certbot has been carefully engineered to handle the case where both manual
+   automated renewal and pre-installed automated renewal are set up.</li>
+</ol>
+<p>Setting up automated renewal</p>
+<p>If you think you may need to set up automated renewal, follow these instructions to set up a
+scheduled task to automatically renew your certificates in the background. If you are unsure
+whether your system has a pre-installed scheduled task for Certbot, it is safe to follow these
+instructions to create one.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you're using Windows, these instructions are not neccessary as Certbot on Windows comes with a scheduled task for automated renewal pre-installed.</p>
+</div>
+<p>If you are using macOS and installed Certbot using Homebrew, follow the instructions at
+https://certbot.eff.org/instructions to set up automated renewal. The instructions below
+are not applicable on macOS.</p>
+<p>Run the following line, which will add a cron job to <code>/etc/crontab</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">SLEEPTIME</span><span class="o">=</span><span class="k">$(</span>awk <span class="s1">&#39;BEGIN{srand(); print int(rand()_(3600+1))}&#39;</span><span class="k">)</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">&quot;0 0,12 _ \* \* root sleep </span><span class="nv">$SLEEPTIME</span><span class="s2"> &amp;&amp; certbot renew -q&quot;</span> <span class="p">|</span> sudo tee -a /etc/crontab &gt; /dev/null
+</code></pre></div>
+<p>If you needed to stop your webserver to run Certbot, you'll want to
+add <code>pre</code> and <code>post</code> hooks to stop and start your webserver automatically.
+For example, if your webserver is HAProxy, run the following commands to create the hook files
+in the appropriate directory:</p>
+<div class="highlight"><pre><span></span><code>sudo sh -c <span class="s1">&#39;printf &quot;#!/bin/sh\nservice haproxy stop\n&quot; &gt; /etc/letsencrypt/renewal-hooks/pre/haproxy.sh&#39;</span>
+sudo sh -c <span class="s1">&#39;printf &quot;#!/bin/sh\nservice haproxy start\n&quot; &gt; /etc/letsencrypt/renewal-hooks/post/haproxy.sh&#39;</span>
+sudo chmod <span class="m">755</span> /etc/letsencrypt/renewal-hooks/pre/haproxy.sh
+sudo chmod <span class="m">755</span> /etc/letsencrypt/renewal-hooks/post/haproxy.sh
+</code></pre></div>
+<p>Congratulations, Certbot will now automatically renew your certificates in the background.</p>
+<p>If you are interested in learning more about how Certbot renews your certificates, see the
+<code>Renewing certificates</code>_ section above.</p>
+<p><a id="where-certs"></a></p>
+<h2 id="_14">我的证书在哪里?<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>所有生成的密钥和颁发的证书都可以在<code>/etc/letsencrypt/live/$domain</code>中找到，其中<code>$domain</code>是证书名称(参见下面的说明)。
+不要复制，请将您的(web)服务器配置直接指向这些文件(或创建符号链接)。
+在更新期间，<code>/etc/letsencrypt/live</code>将使用最新的必要文件进行更新。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>在路径<code>/etc/letsencrypt/live/$domain</code>中使用的证书名称<code>$domain</code>遵循以下约定:</p>
+</div>
+<ul>
+<li>这是它的名字<code>--cert-name</code>,</li>
+<li>如果用户没有设置<code>--cert-name</code>，它是给<code>--domains</code>的第一个域，</li>
+<li>如果第一个域是通配符域(例如;<code>*.example.com</code>)证书名称将为<code>example.com</code>，</li>
+<li>如果与已命名为<code>example.com</code>的证书发生名称冲突，则将使用<code>example.com-001</code>数字序列构造新的证书名称。.</li>
+</ul>
+<p>For historical reasons, the containing directories are created with
+permissions of <code>0700</code> meaning that certificates are accessible only
+to servers that run as the root user. <strong>If you will never downgrade
+to an older version of Certbot</strong>, then you can safely fix this using
+<code>chmod 0755 /etc/letsencrypt/{live,archive}</code>.</p>
+<p>For servers that drop root privileges before attempting to read the
+private key file, you will also need to use <code>chgrp</code> and <code>chmod
+0640</code> to allow the server to read
+<code>/etc/letsencrypt/live/$domain/privkey.pem</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>/etc/letsencrypt/archive</code> and <code>/etc/letsencrypt/keys</code></p>
+</div>
+<p>contain all previous keys and certificates, while <code>/etc/letsencrypt/live</code> symlinks to the latest versions.</p>
+<p>The following files are available:</p>
+<p><code>privkey.pem</code> Private key for the certificate.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This <strong>must be kept secret at all times</strong>! Never share it with anyone, including Certbot developers.
+You cannot put it into a safe, however - your server still needs to access this file in order for SSL/TLS to work.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Certbot version 0.29.0, private keys for new certificate default to <code>0600</code>.
+Any changes to the group mode or group owner (gid) of this file will be preserved on renewals.</p>
+</div>
+<p>This is what Apache needs for <code>SSLCertificateKeyFile  &lt;https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatekeyfile&gt;</code><em>,
+and Nginx for <code>ssl_certificate_key  &lt;https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate_key&gt;</code></em>.</p>
+<p><code>fullchain.pem</code>
+All certificates, <strong>including</strong> server certificate (aka leaf certificate or
+end-entity certificate). The server certificate is the first one in this file,
+followed by any intermediates.</p>
+<p>This is what Apache &gt;= 2.4.8 needs for <code>SSLCertificateFile  &lt;https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatefile&gt;</code><em>,
+and what Nginx needs for <code>ssl_certificate  &lt;https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate&gt;</code></em>.</p>
+<p><code>cert.pem</code> and <code>chain.pem</code> (less common)
+<code>cert.pem</code> contains the server certificate by itself, and
+<code>chain.pem</code> contains the additional intermediate certificate or
+certificates that web browsers will need in order to validate the
+server certificate. If you provide one of these files to your web
+server, you <strong>must</strong> provide both of them, or some browsers will show
+"This Connection is Untrusted" errors for your site, <code>some of the time
+  &lt;https://whatsmychaincert.com/&gt;</code>_.</p>
+<p>Apache &lt; 2.4.8 needs these for <code>SSLCertificateFile  &lt;https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatefile&gt;</code><em>.
+and <code>SSLCertificateChainFile  &lt;https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatechainfile&gt;</code></em>,
+respectively.</p>
+<p>If you're using OCSP stapling with Nginx &gt;= 1.3.7, <code>chain.pem</code> should be
+provided as the <code>ssl_trusted_certificate  &lt;https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate&gt;</code>_
+to validate OCSP responses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All files are PEM-encoded.</p>
+</div>
+<p>If you need other format, such as DER or PFX, then you
+could convert using <code>openssl</code>. You can automate that with
+<code>--deploy-hook</code> if you're using automatic renewal_.</p>
+<p><a id="hooks"></a></p>
+<h2 id="_15">前和后验证挂钩<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<p>Certbot allows for the specification of pre and post validation hooks when run
+in manual mode. The flags to specify these scripts are <code>--manual-auth-hook</code>
+and <code>--manual-cleanup-hook</code> respectively and can be used as follows:</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --manual --manual-auth-hook /path/to/http/authenticator.sh --manual-cleanup-hook /path/to/http/cleanup.sh -d secure.example.com
+</code></pre></div>
+<p>This will run the <code>authenticator.sh</code> script, attempt the validation, and then run
+the <code>cleanup.sh</code> script. Additionally certbot will pass relevant environment
+variables to these scripts:</p>
+<ul>
+<li><code>CERTBOT_DOMAIN</code>: The domain being authenticated</li>
+<li><code>CERTBOT_VALIDATION</code>: The validation string</li>
+<li><code>CERTBOT_TOKEN</code>: Resource name part of the HTTP-01 challenge (HTTP-01 only)</li>
+<li><code>CERTBOT_REMAINING_CHALLENGES</code>: Number of challenges remaining after the current challenge</li>
+<li><code>CERTBOT_ALL_DOMAINS</code>: A comma-separated list of all domains challenged for the current certificate</li>
+</ul>
+<p>Additionally for cleanup:</p>
+<ul>
+<li><code>CERTBOT_AUTH_OUTPUT</code>: Whatever the auth script wrote to stdout</li>
+</ul>
+<p>Example usage for HTTP-01:</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --manual --preferred-challenges<span class="o">=</span>http --manual-auth-hook /path/to/http/authenticator.sh --manual-cleanup-hook /path/to/http/cleanup.sh -d secure.example.com
+</code></pre></div>
+<div class="highlight"><span class="filename">/path/to/http/authenticator.sh</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="nv">$CERTBOT_VALIDATION</span> &gt; /var/www/htdocs/.well-known/acme-challenge/<span class="nv">$CERTBOT_TOKEN</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">/path/to/http/cleanup.sh</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+rm -f /var/www/htdocs/.well-known/acme-challenge/<span class="nv">$CERTBOT_TOKEN</span>
+</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">DNS-01 (Cloudflare API v4)的使用示例(仅供示例使用，不按原样使用)</p>
+<div class="highlight"><pre><span></span><code>certbot certonly --manual --preferred-challenges<span class="o">=</span>dns --manual-auth-hook /path/to/dns/authenticator.sh --manual-cleanup-hook /path/to/dns/cleanup.sh -d secure.example.com
+</code></pre></div>
+</div>
+<div class="highlight"><span class="filename">/path/to/dns/authenticator.sh</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Get your API key from https://www.cloudflare.com/a/account/my-account</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key&quot;</span>
+<span class="nv">EMAIL</span><span class="o">=</span><span class="s2">&quot;your.email@example.com&quot;</span>
+
+<span class="c1"># Strip only the top domain to get the zone id</span>
+<span class="nv">DOMAIN</span><span class="o">=</span><span class="k">$(</span>expr match <span class="s2">&quot;</span><span class="nv">$CERTBOT_DOMAIN</span><span class="s2">&quot;</span> <span class="s1">&#39;.*\.\(.*\..*\)&#39;</span><span class="k">)</span>
+
+<span class="c1"># Get the Cloudflare zone id</span>
+<span class="nv">ZONE_EXTRA_PARAMS</span><span class="o">=</span><span class="s2">&quot;status=active&amp;page=1&amp;per_page=20&amp;order=status&amp;direction=desc&amp;match=all&quot;</span>
+<span class="nv">ZONE_ID</span><span class="o">=</span><span class="k">$(</span>curl -s -X GET <span class="s2">&quot;https://api.cloudflare.com/client/v4/zones?name=</span><span class="nv">$DOMAIN</span><span class="s2">&amp;</span><span class="nv">$ZONE_EXTRA_PARAMS</span><span class="s2">&quot;</span> <span class="se">\</span>
+     -H     <span class="s2">&quot;X-Auth-Email: </span><span class="nv">$EMAIL</span><span class="s2">&quot;</span> <span class="se">\</span>
+     -H     <span class="s2">&quot;X-Auth-Key: </span><span class="nv">$API_KEY</span><span class="s2">&quot;</span> <span class="se">\</span>
+     -H     <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="p">|</span> python -c <span class="s2">&quot;import sys,json;print(json.load(sys.stdin)[&#39;result&#39;][0][&#39;id&#39;])&quot;</span><span class="k">)</span>
+
+<span class="c1"># Create TXT record</span>
+<span class="nv">CREATE_DOMAIN</span><span class="o">=</span><span class="s2">&quot;_acme-challenge.</span><span class="nv">$CERTBOT_DOMAIN</span><span class="s2">&quot;</span>
+<span class="nv">RECORD_ID</span><span class="o">=</span><span class="k">$(</span>curl -s -X POST <span class="s2">&quot;https://api.cloudflare.com/client/v4/zones/</span><span class="nv">$ZONE_ID</span><span class="s2">/dns_records&quot;</span> <span class="se">\</span>
+     -H     <span class="s2">&quot;X-Auth-Email: </span><span class="nv">$EMAIL</span><span class="s2">&quot;</span> <span class="se">\</span>
+     -H     <span class="s2">&quot;X-Auth-Key: </span><span class="nv">$API_KEY</span><span class="s2">&quot;</span> <span class="se">\</span>
+     -H     <span class="s2">&quot;Content-Type: application/json&quot;</span> <span class="se">\</span>
+     --data <span class="s1">&#39;{&quot;type&quot;:&quot;TXT&quot;,&quot;name&quot;:&quot;&#39;</span><span class="s2">&quot;</span><span class="nv">$CREATE_DOMAIN</span><span class="s2">&quot;</span><span class="s1">&#39;&quot;,&quot;content&quot;:&quot;&#39;</span><span class="s2">&quot;</span><span class="nv">$CERTBOT_VALIDATION</span><span class="s2">&quot;</span><span class="s1">&#39;&quot;,&quot;ttl&quot;:120}&#39;</span> <span class="se">\</span>
+             <span class="p">|</span> python -c <span class="s2">&quot;import sys,json;print(json.load(sys.stdin)[&#39;result&#39;][&#39;id&#39;])&quot;</span><span class="k">)</span>
+<span class="c1"># Save info for cleanup</span>
+<span class="k">if</span> <span class="o">[</span> ! -d /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        mkdir -m <span class="m">0700</span> /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>
+<span class="k">fi</span>
+<span class="nb">echo</span> <span class="nv">$ZONE_ID</span> &gt; /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/ZONE_ID
+<span class="nb">echo</span> <span class="nv">$RECORD_ID</span> &gt; /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/RECORD_ID
+
+<span class="c1"># Sleep to make sure the change has time to propagate over to DNS</span>
+sleep <span class="m">25</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">/path/to/dns/cleanup.sh</span><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Get your API key from https://www.cloudflare.com/a/account/my-account</span>
+<span class="nv">API_KEY</span><span class="o">=</span><span class="s2">&quot;your-api-key&quot;</span>
+<span class="nv">EMAIL</span><span class="o">=</span><span class="s2">&quot;your.email@example.com&quot;</span>
+
+<span class="k">if</span> <span class="o">[</span> -f /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/ZONE_ID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">ZONE_ID</span><span class="o">=</span><span class="k">$(</span>cat /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/ZONE_ID<span class="k">)</span>
+        rm -f /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/ZONE_ID
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> -f /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/RECORD_ID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">RECORD_ID</span><span class="o">=</span><span class="k">$(</span>cat /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/RECORD_ID<span class="k">)</span>
+        rm -f /tmp/CERTBOT_<span class="nv">$CERTBOT_DOMAIN</span>/RECORD_ID
+<span class="k">fi</span>
+
+<span class="c1"># Remove the challenge TXT record from the zone</span>
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ZONE_ID</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RECORD_ID</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        curl -s -X DELETE <span class="s2">&quot;https://api.cloudflare.com/client/v4/zones/</span><span class="nv">$ZONE_ID</span><span class="s2">/dns_records/</span><span class="nv">$RECORD_ID</span><span class="s2">&quot;</span> <span class="se">\</span>
+                -H <span class="s2">&quot;X-Auth-Email: </span><span class="nv">$EMAIL</span><span class="s2">&quot;</span> <span class="se">\</span>
+                -H <span class="s2">&quot;X-Auth-Key: </span><span class="nv">$API_KEY</span><span class="s2">&quot;</span> <span class="se">\</span>
+                -H <span class="s2">&quot;Content-Type: application/json&quot;</span>
+    <span class="k">fi</span>
+<span class="k">fi</span>
+</code></pre></div>
+<p><a id="lock-files"></a></p>
+<h2 id="acme">更改 ACME 服务器<a class="headerlink" href="#acme" title="Permanent link">&para;</a></h2>
+<p>By default, Certbot uses Let's Encrypt's production server at https://acme-v02.api.letsencrypt.org/directory.
+You can tell Certbot to use a different CA by providing <code>--server</code> on the command line or in a :ref:<code>configuration file &lt;config-file&gt;</code> with the URL of the server's
+ACME directory. For example, if you would like to use Let's Encrypt's
+staging server, you would add <code>--server
+https://acme-staging-v02.api.letsencrypt.org/directory</code> to the command line.</p>
+<p>If Certbot does not trust the SSL certificate used by the ACME server, you
+can use the <code>REQUESTS_CA_BUNDLE
+&lt;https://requests.readthedocs.io/en/latest/user/advanced/#ssl-cert-verification&gt;</code>_
+environment variable to override the root certificates trusted by Certbot. Certbot
+uses the <code>requests</code> library, which does not use the operating system trusted root store.</p>
+<p>If you use <code>--server</code> to specify an ACME CA that implements the standardized
+version of the spec, you may be able to obtain a certificate for a
+wildcard domain. Some CAs (such as Let's Encrypt) require that domain
+validation for wildcard domains must be done through modifications to
+DNS records which means that the dns-01<em> challenge type must be used. To
+see a list of Certbot plugins that support this challenge type and how
+to use them, see plugins</em>.</p>
+<h2 id="_16">锁文件<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<p>When processing a validation Certbot writes a number of lock files on your system
+to prevent multiple instances from overwriting each other's changes. This means
+that by default two instances of Certbot will not be able to run in parallel.</p>
+<p>Since the directories used by Certbot are configurable, Certbot
+will write a lock file for all of the directories it uses. This include Certbot's
+<code>--work-dir</code>, <code>--logs-dir</code>, and <code>--config-dir</code>. By default these are
+<code>/var/lib/letsencrypt</code>, <code>/var/log/letsencrypt</code>, and <code>/etc/letsencrypt</code>
+respectively. Additionally if you are using Certbot with Apache or nginx it will
+lock the configuration folder for that program, which are typically also in the
+<code>/etc</code> directory.</p>
+<p>Note that these lock files will only prevent other instances of Certbot from
+using those directories, not other processes. If you'd like to run multiple
+instances of Certbot simultaneously you should specify different directories
+as the <code>--work-dir</code>, <code>--logs-dir</code>, and <code>--config-dir</code> for each instance
+of Certbot that you would like to run.</p>
+<p><a id="config-file"></a></p>
+<h2 id="_17">配置文件<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<p>Certbot accepts a global configuration file that applies its options to all invocations
+of Certbot. Certificate specific configuration choices should be set in the <code>.conf</code>
+files that can be found in <code>/etc/letsencrypt/renewal</code>.</p>
+<p>By default no cli.ini file is created (though it may exist already if you installed Certbot
+via a package manager, for instance).
+After creating one it is possible to specify the location of this configuration file with
+<code>certbot --config cli.ini</code> (or shorter <code>-c cli.ini</code>). An
+example configuration file is shown below:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This is an example of the kind of things you can do in a configuration file.</span>
+<span class="c1"># All flags used by the client can be configured here. Run Certbot with</span>
+<span class="c1"># &quot;--help&quot; to learn more about the available options.</span>
+<span class="c1">#</span>
+<span class="c1"># Note that these options apply automatically to all use of Certbot for</span>
+<span class="c1"># obtaining or renewing certificates, so options specific to a single</span>
+<span class="c1"># certificate on a system with several certificates should not be placed</span>
+<span class="c1"># here.</span>
+
+<span class="c1"># Use ECC for the private key</span>
+key-type <span class="o">=</span> ecdsa
+elliptic-curve <span class="o">=</span> secp384r1
+
+<span class="c1"># Use a 4096 bit RSA key instead of 2048</span>
+rsa-key-size <span class="o">=</span> <span class="m">4096</span>
+
+<span class="c1"># Uncomment and update to register with the specified e-mail address</span>
+<span class="c1"># email = foo@example.com</span>
+
+<span class="c1"># Uncomment to use the standalone authenticator on port 443</span>
+<span class="c1"># authenticator = standalone</span>
+
+<span class="c1"># Uncomment to use the webroot authenticator. Replace webroot-path with the</span>
+<span class="c1"># path to the public_html / webroot folder being served by your web server.</span>
+<span class="c1"># authenticator = webroot</span>
+<span class="c1"># webroot-path = /usr/share/nginx/html</span>
+
+<span class="c1"># Uncomment to automatically agree to the terms of service of the ACME server</span>
+<span class="c1"># agree-tos = true</span>
+
+<span class="c1"># An example of using an alternate ACME server that uses EAB credentials</span>
+<span class="c1"># server = https://acme.sectigo.com/v2/InCommonRSAOV</span>
+<span class="c1"># eab-kid = somestringofstuffwithoutquotes</span>
+<span class="c1"># eab-hmac-key = yaddayaddahexhexnotquoted</span>
+</code></pre></div>
+<p>By default, the following locations are searched:</p>
+<ul>
+<li><code>/etc/letsencrypt/cli.ini</code></li>
+<li><code>$XDG_CONFIG_HOME/letsencrypt/cli.ini</code> (or <code>~/.config/letsencrypt/cli.ini</code> if <code>$XDG_CONFIG_HOME</code> is not set).</li>
+</ul>
+<p>Since this configuration file applies to all invocations of certbot it is incorrect
+to list domains in it. Listing domains in cli.ini may prevent renewal from working.
+Additionally due to how arguments in cli.ini are parsed, options which wish to
+not be set should not be listed. Options set to false will instead be read
+as being set to true by older versions of Certbot, since they have been listed
+in the config file.</p>
+<p>.. keep it up to date with constants.py</p>
+<p><a id="log-rotation"></a></p>
+<h2 id="_18">日志轮转<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<p>By default certbot stores status logs in <code>/var/log/letsencrypt</code>. By default
+certbot will begin rotating logs once there are 1000 logs in the log directory.
+Meaning that once 1000 files are in <code>/var/log/letsencrypt</code> Certbot will delete
+the oldest one to make room for new logs. The number of subsequent logs can be
+changed by passing the desired number to the command line flag
+<code>--max-log-backups</code>. Setting this flag to 0 disables log rotation entirely,
+causing certbot to always append to the same log file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some distributions, including Debian and Ubuntu, disable certbot's internal log rotation in favor of a more traditional logrotate script.
+If you are using a distribution's packages and want to alter the log rotation, check <code>/etc/logrotate.d/</code> for a certbot rotation script.</p>
+</div>
+<p><a id="command-line"></a></p>
+<h2 id="certbot_1">Certbot 命令行选项<a class="headerlink" href="#certbot_1" title="Permanent link">&para;</a></h2>
+<p>Certbot supports a lot of command line options. Here's the full list, from <code>certbot --help all</code>:</p>
+<p>.. literalinclude:: cli-help.txt</p>
+<h2 id="_19">得到帮助<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
+<p>如果您有问题，我们建议您在 Let's Encrypt<a href="https://community.letsencrypt.org">社区论坛</a>上发布。.</p>
+<p>如果您在软件中发现 bug，请在我们的<a href="https://github.com/certbot/certbot/issues">问题跟踪器</a>中报告。
+记得给我们尽可能多的信息:</p>
+<ul>
+<li>复制并粘贴所使用的命令行和输出(注意后者可能包含一些个人身份信息，包括您的电子邮件和域名)</li>
+<li>从<code>/var/log/letsencrypt</code>中复制并粘贴日志(尽管注意它们也可能包含个人身份信息)</li>
+<li>复制并粘贴<code>certbot --version</code>输出</li>
+<li>您的操作系统，包括特定版本</li>
+<li>指定您选择的安装方法</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../intro/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 介绍" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              介绍
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../help/" class="md-footer__link md-footer__link--next" aria-label="Next: 帮助" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              帮助
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      版权所有 © 2022 Knative Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/KnativeProject" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/knative/community" target="_blank" rel="noopener" title="Knative Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://slack.knative.dev" target="_blank" rel="noopener" title="Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>

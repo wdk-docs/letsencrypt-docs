@@ -1,0 +1,1105 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Let’s Encrypt 文档">
+      
+      
+      
+        <link rel="canonical" href="https://knative.dev/docs/docker-nginx-certbot/docs/advanced_usage/">
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>高级用法 - Let’s Encrypt</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Let’s Encrypt" class="md-header__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../../../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Let’s Encrypt
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              高级用法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      主页
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../certbot/instructions/" class="md-tabs__link">
+        Certbot
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        docker-nginx-certbot
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Let’s Encrypt" class="md-nav__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../../../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    Let’s Encrypt
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/instructions/" class="md-nav__link">
+        说明
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/install/" class="md-nav__link">
+        安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/intro/" class="md-nav__link">
+        介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/using/" class="md-nav__link">
+        手册
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/help/" class="md-nav__link">
+        帮助
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/glossary/" class="md-nav__link">
+        术语
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/what/" class="md-nav__link">
+        什么是证书
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          docker-nginx-certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="docker-nginx-certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          docker-nginx-certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        入门手册
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../good_to_know/" class="md-nav__link">
+        详细介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          高级用法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        高级用法
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    手动/强制 更新
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server_name" class="md-nav__link">
+    覆盖 server_name
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    多证书设置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acme-url" class="md-nav__link">
+    使用自定义 ACME URL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ca" class="md-nav__link">
+    本地 CA
+  </a>
+  
+    <nav class="md-nav" aria-label="本地 CA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    文件和文件夹
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ca_1" class="md-nav__link">
+    创建自定义 CA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot_authenticators/" class="md-nav__link">
+        DNS验证器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nginx_tips/" class="md-nav__link">
+        Nginx提示
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dockerhub_tags/" class="md-nav__link">
+        DockerHub标签
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        更新日志
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    手动/强制 更新
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server_name" class="md-nav__link">
+    覆盖 server_name
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    多证书设置
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acme-url" class="md-nav__link">
+    使用自定义 ACME URL
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ca" class="md-nav__link">
+    本地 CA
+  </a>
+  
+    <nav class="md-nav" aria-label="本地 CA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    文件和文件夹
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ca_1" class="md-nav__link">
+    创建自定义 CA
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/wdk-docs/letsencrypt-docs/edit/main/docs/docker-nginx-certbot/docs/advanced_usage.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="_1">高级用法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>这个文档包含了关于被认为是“高级”的特性的信息，并且很可能需要你阅读一些实际的代码来完全理解发生了什么。</p>
+<p><a id="manualforce-renewal"></a></p>
+<h2 id="_2">手动/强制 更新<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>手动触发证书的更新可能会很有趣，这就是为什么 <a href="../../src/scripts/run_certbot.sh"><code>run_certbot.sh</code></a>脚本可以在任何时候从容器中独立运行的原因。</p>
+<p>然而，请求重新加载所有配置文件的首选方法是向容器发送<a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/bf2c1354f55adffadc13b1f1792e205f9dd25f86"><code>SIGHUP</code></a> :</p>
+<div class="highlight"><pre><span></span><code>docker <span class="nb">kill</span> --signal<span class="o">=</span>HUP &lt;container_name&gt;
+</code></pre></div>
+<p>这将终止<a href="../good_to_know/#renewal-check-interval">睡眠计时器</a>，并使更新循环从头开始，其中包括许多其他检查，而不仅仅是证书。</p>
+<p>虽然在大多数情况下这就足够了，但有时可能需要<strong>强制</strong>更新证书，即使 certbot 认为它可以保留证书一段时间(就像<a href="https://community.letsencrypt.org/t/revoking-certain-certificates-on-march-4/114864">这个</a>发生时)。
+因此，当调用<a href="../../src/scripts/run_certbot.sh"><code>run_certbot.sh</code></a>脚本时，可以添加<code>force</code>作为参数，使其将<code>--force-renewal</code>标记附加到所发出的请求上。</p>
+<div class="highlight"><pre><span></span><code>docker <span class="nb">exec</span> -it &lt;container_name&gt; /scripts/run_certbot.sh force
+</code></pre></div>
+<p>这将请求新的证书，而不管它们何时被设置为过期。</p>
+<div class="admonition warning">
+<p class="admonition-title">使用<code>force</code>会对<strong>所有</strong>证书发出新的请求，所以不要经常运行它，因为请求<a href="https://letsencrypt.org/docs/rate-limits/">生产证书</a>是有限制的。</p>
+</div>
+<p><a id=“override-server_name”></a></p>
+<h2 id="server_name">覆盖 <code>server_name</code><a class="headerlink" href="#server_name" title="Permanent link">&para;</a></h2>
+<p>Nginx 允许你在<a href="https://nginx.org/en/docs/http/server_names.html"><code>server_name</code> declaration</a>中做很多事情，但由于这个映像中的脚本从相同的行中组成证书请求，我们在这些行中可能定义的内容受到严重限制。
+例如，行<code>server_name mail.*</code>将产生一个域名<code>mail.*</code>的证书请求，该域名无效。</p>
+<p>然而，为了克服这种限制，可以在同一行上定义一个特殊的注释，以覆盖脚本将拾取的内容。
+在这个人为的例子中</p>
+<div class="highlight"><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w">              </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/test-name/privkey.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kn">server_name</span><span class="w">         </span><span class="s">yourdomain.org</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w">         </span><span class="s">www.yourdomain.org</span><span class="p">;</span><span class="w"> </span><span class="c1"># certbot_domain:*.yourdomain.org</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w">         </span><span class="s">sub.yourdomain.org</span><span class="p">;</span><span class="w"> </span><span class="c1"># certbot_domain:*.yourdomain.org</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w">         </span><span class="s">mail.*</span><span class="p">;</span><span class="w">             </span><span class="c1"># certbot_domain:*.yourdomain.org</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w">         </span><span class="p">~</span><span class="sr">^(?&lt;user&gt;.+)\.yourdomain\.org$;</span><span class="w"></span>
+<span class="w">    </span><span class="s">...</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+</code></pre></div>
+<p>我们将以一个证书请求结束，它看起来像这样:</p>
+<div class="highlight"><pre><span></span><code>certbot --cert-name &quot;test-name&quot; ... -d yourdomain.org -d *.yourdomain.org
+</code></pre></div>
+<p>第一个服务器名称将像往常一样被选中，而下面三个将被注释中的域名遮蔽，即<code>*.yourdomain.org</code>(重复的名称将在最终请求中删除)。</p>
+<p>最后一个服务器名是特殊的，因为它是一个正则表达式，并且总是以<code>~</code>开头。
+因为我们知道我们永远不能从一个以该字符开头的名称创建一个有效的请求，它们将总是被脚本忽略(后面的注释将优先而不是被忽略)。
+更详细的示例可以在<a href="../../examples/example_server_overrides.conf"><code>example_server_overrides.conf</code></a>中查看。.</p>
+<div class="highlight"><span class="filename">../examples/example_server_overrides.conf</span><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Listen to port 443 on both IPv4 and IPv6.</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Domain names this server should respond to.</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">yourdomain.org</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">www.yourdomain.org</span><span class="p">;</span><span class="w"> </span><span class="c1"># certbot_domain:*.yourdomain.org</span>
+
+<span class="w">    </span><span class="c1"># Load the certificate files.</span>
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w">         </span><span class="s">/etc/letsencrypt/live/test-name/fullchain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w">     </span><span class="s">/etc/letsencrypt/live/test-name/privkey.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_trusted_certificate</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/test-name/chain.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Load the Diffie-Hellman parameter.</span>
+<span class="w">    </span><span class="kn">ssl_dhparam</span><span class="w"> </span><span class="s">/etc/letsencrypt/dhparams/dhparam.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="s">&#39;You</span><span class="w"> </span><span class="s">have</span><span class="w"> </span><span class="s">reached</span><span class="w"> </span><span class="s">either</span><span class="w"> </span><span class="s">yourdomain.org</span><span class="w"> </span><span class="s">or</span><span class="w"> </span><span class="s">www.yourdomain.org&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Content-Type</span><span class="w"> </span><span class="s">text/plain</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">sub1.yourdomain.org</span><span class="w"> </span><span class="s">sub2.yourdomain.org</span><span class="p">;</span><span class="w"> </span><span class="c1"># certbot_domain:*.yourdomain.org</span>
+
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w">         </span><span class="s">/etc/letsencrypt/live/test-name/fullchain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w">     </span><span class="s">/etc/letsencrypt/live/test-name/privkey.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_trusted_certificate</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/test-name/chain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_dhparam</span><span class="w"> </span><span class="s">/etc/letsencrypt/dhparams/dhparam.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="s">&#39;You</span><span class="w"> </span><span class="s">have</span><span class="w"> </span><span class="s">reached</span><span class="w"> </span><span class="s">either</span><span class="w"> </span><span class="s">sub1.yourdomain.org</span><span class="w"> </span><span class="s">or</span><span class="w"> </span><span class="s">sub2.yourdomain.org&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Content-Type</span><span class="w"> </span><span class="s">text/plain</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:443</span><span class="w"> </span><span class="s">ssl</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Server names that start with ~ will be ignored, and in this example the</span>
+<span class="w">    </span><span class="c1"># &quot;test-name&quot; certificate will already include *.yourdomain.org which will</span>
+<span class="w">    </span><span class="c1"># cover all the cases here.</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w">   </span><span class="p">~</span><span class="sr">^(?&lt;user&gt;.+)\.yourdomain\.org$;</span><span class="w"></span>
+
+<span class="w">    </span><span class="s">ssl_certificate</span><span class="w">         </span><span class="s">/etc/letsencrypt/live/test-name/fullchain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w">     </span><span class="s">/etc/letsencrypt/live/test-name/privkey.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_trusted_certificate</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/test-name/chain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_dhparam</span><span class="w"> </span><span class="s">/etc/letsencrypt/dhparams/dhparam.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># Return content based on the capture group in the server name.</span>
+<span class="w">        </span><span class="c1"># Note: &quot;sub1&quot; and &quot;sub2&quot; will be caught by the sever above.</span>
+<span class="w">        </span><span class="kn">root</span><span class="w">   </span><span class="s">/content/</span><span class="nv">$user</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Drop any request that does not match any of the other server names.</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w">               </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_reject_handshake</span><span class="w"> </span><span class="no">on</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>重要的是要记住，这里我们定义了一个通配符域名(<code>*.yourdomain.org</code>中的 <code>*</code>)，这要求您使用能够进行 DNS-01 挑战的验证器，有关此的更多信息可以在<a href="../certbot_authenticators/">certbot_authenticators.md</a>文档中找到。</p>
+<p><a id="multi-certificate-setup"></a></p>
+<h2 id="_3">多证书设置<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>这是<a href="../good_to_know/">Good to Know</a> 文档中<a href="../good_to_know/#ecdsa-and-rsa-certificates">RSA 和 ECDSA</a>部分的延续，其中简要提到，实际上可以让 Nginx 同时服务于这两种证书类型，从而再次扩展对半旧设备的支持，同时还允许使用最新的加密。
+<a href="https://medium.com/hackernoon/rsa-and-ecdsa-hybrid-nginx-setup-with-letsencrypt-certificates-ee422695d7d3">设置</a>稍微复杂一些，但是<a href="../../examples/example_server_multicert.conf"><code>example_server_multicert.conf</code></a>文件应该被配置，因此您应该只需要编辑顶部的"yourdomain.org"语句。</p>
+<div class="highlight"><span class="filename">../examples/example_server_multicert.conf</span><pre><span></span><code><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1"># Listen to port 443 on both IPv4 and IPv6.</span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">default_server</span><span class="w"> </span><span class="s">reuseport</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="s">[::]:443</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">default_server</span><span class="w"> </span><span class="s">reuseport</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Domain names this server should respond to.</span>
+<span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">yourdomain.org</span><span class="w"> </span><span class="s">www.yourdomain.org</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Load the ECDSA certificates.</span>
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w">     </span><span class="s">/etc/letsencrypt/live/test-ecc/fullchain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/test-ecc/privkey.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Load the RSA certificates.</span>
+<span class="w">    </span><span class="kn">ssl_certificate</span><span class="w">     </span><span class="s">/etc/letsencrypt/live/test-rsa/fullchain.pem</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/letsencrypt/live/test-rsa/privkey.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Load the Diffie-Hellman parameter.</span>
+<span class="w">    </span><span class="kn">ssl_dhparam</span><span class="w"> </span><span class="s">/etc/letsencrypt/dhparams/dhparam.pem</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># Define the ciphers to use in the preferred order.</span>
+<span class="w">    </span><span class="kn">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_prefer_server_ciphers</span><span class="w"> </span><span class="no">on</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">&quot;EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:DHE+AESGCM:DHE:!RSA!aNULL:!eNULL:!LOW:!RC4:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!CAMELLIA:!SEED&quot;</span><span class="p">;</span><span class="w"></span>
+
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="s">&#39;Let\&#39;s</span><span class="w"> </span><span class="s">Encrypt</span><span class="w"> </span><span class="s">certificate</span><span class="w"> </span><span class="s">successfully</span><span class="w"> </span><span class="s">installed!&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Content-Type</span><span class="w"> </span><span class="s">text/plain</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>它的工作原理是 Nginx 能够为每个服务器块<a href="https://scotthelme.co.uk/hybrid-rsa-and-ecdsa-certificates-with-nginx/">加载多个证书文件</a>，然后你按照优先选择 ECDSA 证书的顺序配置密码套件。
+在容器内运行的<a href="../../src/scripts/run_certbot.sh">scripts</a>然后在<a href="../good_to_know/#how-the-script-add-domain-names-to-certificate-requests"><code>--cert-name</code></a>参数中寻找这些字符串的一些(不区分大小写)变体:</p>
+<ul>
+<li><code>-rsa</code></li>
+<li><code>.rsa</code></li>
+<li><code>-ecc</code></li>
+<li><code>.ecc</code></li>
+<li><code>-ecdsa</code></li>
+<li><code>.ecdsa</code></li>
+</ul>
+<p>并使用正确的类型集发出证书请求。
+有关更多详细信息，请参阅<a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/9195bf02cb200dcec8206b46da971734b1d6669f">实际提交</a>，但您需要知道的是，如果发现这些选项，它们将覆盖<a href="../../#optional"><code>USE_ECDSA</code></a>环境变量。</p>
+<h2 id="acme-url">使用自定义 ACME URL<a class="headerlink" href="#acme-url" title="Permanent link">&para;</a></h2>
+<p>在<a href="../../src/scripts/run_certbot.sh"><code>run_certbot.sh</code></a>脚本的顶部有两个变量:</p>
+<ul>
+<li><code>CERTBOT_PRODUCTION_URL</code></li>
+<li><code>CERTBOT_STAGING_URL</code></li>
+</ul>
+<p>它们用于定义在请求新证书时 certbot 将尝试联系哪个服务器。
+这些变量具有默认值，但是可以通过定义具有相同名称的环境变量来覆盖它们。
+这允许您将 certbot 重定向到另一个自定义 URL(例如，如果您正在运行自己的自定义 AMCE 服务器)。</p>
+<h2 id="ca">本地 CA<a class="headerlink" href="#ca" title="Permanent link">&para;</a></h2>
+<p>在一个网站的开发阶段，你可能在一台没有指向自己的 DNS 记录的计算机上测试东西，或者它可能根本没有互联网访问。
+由于 certbot 需要这两个条件才能正常工作，因此在这些特殊情况下，以前不可能使用这个图像。</p>
+<p>这就是创建<a href="../../src/scripts/run_local_ca.sh"><code>run_local_ca.sh</code></a> 脚本的原因，因为这使得使用<a href="https://gist.github.com/Soarez/9688998">本地(自签名)证书颁发机构</a>可以在不依赖任何外部服务或互联网连接的情况下颁发网站证书成为可能。
+它还使我们能够颁发对<code>localhost</code>和/或<code>::1</code>等 IP 地址有效的证书，否则 certbot <a href="https://letsencrypt.org/docs/certificates-for-localhost/">无法</a>创建这些地址。</p>
+<p>To enable the usage of this local CA you just set
+<a href="../../#advanced"><code>USE_LOCAL_CA=1</code></a>, and this will then trigger the
+execution of the <a href="../../src/scripts/run_local_ca.sh"><code>run_local_ca.sh</code></a> script
+instead of the <a href="../../src/scripts/run_certbot.sh"><code>run_certbot.sh</code></a> one when it is
+time to renew the certificates. This script, when run, will always overwrite
+any previous keys and certificates, so alternating between the use of a local
+CA and certbot without first emptying the <code>/etc/letsencrypt</code> folder is not
+supported.</p>
+<p>The script is designed to mimic certbot as closely as reasonable, so the
+keys/certs created are placed in the same locations as certbot would have. This
+means that you only have to edit the <code>server_name</code> in your server configuration
+files to include the variant that you want for your local instance (e.g.
+<code>localhost</code>) and you should be all set.</p>
+<p>However, if you navigate to your site at this point you will run into an error
+named similar to Firefox's <code>SEC_ERROR_UNKNOWN_ISSUER</code>, which just means that
+your browser does not recognize the CA that has signed your site's certificate.
+This is expected (since we just created our own local CA), but at this point
+the connection is using all the fancy HTTPS stuff, and is thus "secure", so you
+can just ignore this warning if you want.</p>
+<p>Another solution is to <a href="https://support.securly.com/hc/en-us/articles/360008547993-How-to-Install-Securly-s-SSL-Certificate-in-Firefox-on-Windows">import</a> the local CA's certificate created by this
+script into your browser, thus making this a known certificate authority and
+any of its signed certs trusted. What this file is, and how to obtain it, is
+explained further in the <a href="#files-and-folders">next section</a>.</p>
+<h3 id="_4">文件和文件夹<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>本地 CA 要运行，需要做几件事:</p>
+<ul>
+<li><code>caPrivkey.pem</code>: CA 使用的私钥-&gt;这是最机密的东西(在真实 CA 的情况下)，必须不惜一切代价保护它。</li>
+<li><code>caCert.pem</code>: 所有客户端都需要 CA 的公共证书部分，以便信任此 CA 签署的任何其他证书。</li>
+<li><code>serial.txt</code>: CA 每次签署新证书时加 1 的长随机十六进制数。</li>
+<li><code>index.txt</code>: 保存此 CA 已颁发的所有证书的<a href="https://pki-tutorial.readthedocs.io/en/latest/cadb.html">记录</a>。</li>
+<li><code>new_certs/</code>: 存放所有新签署证书副本的文件夹。</li>
+</ul>
+<p>All of these are created automatically by the script inside the folder defined
+by <a href="../../src/scripts/run_local_ca.sh"><code>LOCAL_CA_DIR</code></a> (which defaults to
+<code>/etc/local_ca</code>), so by host mounting this folder you will be able to see all
+these files. By then taking the <code>caCert.pem</code> and <a href="https://support.securly.com/hc/en-us/articles/360008547993-How-to-Install-Securly-s-SSL-Certificate-in-Firefox-on-Windows">importing</a> it in your
+browser you will be able to visit these sites without the error stating that
+the certificate is signed by an unknown authority.</p>
+<blockquote>
+<p>The validity period for the automatically created CA is only 30 days, and the
+reason for this is to deter people from using this solution in production.</p>
+</blockquote>
+<p>An important thing to know is that these files are only created if they do
+not exist. What this enables is an even more advanced usecase where you might
+already have a private key and certificate that you trust on your devices, so
+you would like to continue using it for the websites you host as well. Read
+more about this in the <a href="#creating-a-custom-ca">next section</a>.</p>
+<h3 id="ca_1">创建自定义 CA<a class="headerlink" href="#ca_1" title="Permanent link">&para;</a></h3>
+<p>如前一节所述，可以为<a href="../../src/scripts/run_local_ca.sh"><code>run_local_ca.sh</code></a>脚本提供您手动创建的本地证书颁发机构，该证书颁发机构的有效期可能超过 30 天，并且您希望在其他多个设备上信任该证书颁发机构。
+这是一种解决方案，如果您想在永远无法通过开放互联网访问的服务上设置 HTTPS，但您仍然希望它们的通信是安全的，则可以使用该解决方案。</p>
+<p>基本上，你所需要做的就是主机挂载你的自定义私钥和证书到<code>LOCAL_CA_DIR</code>，脚本将使用这些私钥和证书，而不是自动创建的短时间的私钥和证书。
+只需确保文件的命名符合<a href="#files-and-folders">脚本期望的</a>，如果这些组件中的任何一个缺失，它们将在服务第一次启动时创建。</p>
+<blockquote>
+<p>到目前为止，不支持密码保护的私钥。</p>
+</blockquote>
+<p>I did not find it trivial to create a <strong>well configured</strong> CA, so if you want
+to go this route I really suggest that you read up on what you are doing and
+making sure all settings are correctly tuned for your usecase.</p>
+<p>There is a <a href="https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309">lot</a> of <a href="https://github.com/llekn/openssl-ca">high-level</a> information <a href="https://jamielinux.com/docs/openssl-certificate-authority/create-the-root-pair.html">available</a> in regards
+to how to create your own CA, but what I found most confusing was exactly what
+was expected to be inside the <a href="https://github.com/llekn/openssl-ca/blob/master/openssl.cnf"><code>openssl.cnf</code></a> file that is necessary to
+have when running most of the OpenSSL commands. The configuration that is
+present inside the <a href="../../src/scripts/run_local_ca.sh"><code>run_local_ca.sh</code></a> script
+should be quite minimalistic for what we need, while still providing the
+<a href="https://derflounder.wordpress.com/2019/06/06/new-tls-security-requirements-for-ios-13-and-macos-catalina-10-15/">strict settings</a> that some clients need else they will reject these
+custom certificates.</p>
+<p>The most comprehensive guide I have found is the <a href="https://www.feistyduck.com/library/openssl-cookbook/online/ch-openssl.html">OpenSSL Cookbook</a>,
+which goes into great detail about basically everything OpenSSL is able to do,
+along with <a href="https://superuser.com/questions/738612/openssl-ca-keyusage-extension/1248085#1248085">this post</a> which summarizes the settings needed for different
+certificate types. With these two you should be able to make an informed
+configuration in case you want to create your own custom certificate authority,
+and you may of course take a look at the commands used in the
+<a href="../../src/scripts/run_local_ca.sh"><code>generate_ca()</code></a> function to help you on your
+way of creating your own files.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../good_to_know/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 详细介绍" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              详细介绍
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../certbot_authenticators/" class="md-footer__link md-footer__link--next" aria-label="Next: DNS验证器" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              DNS验证器
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      版权所有 © 2022 Knative Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/KnativeProject" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/knative/community" target="_blank" rel="noopener" title="Knative Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://slack.knative.dev" target="_blank" rel="noopener" title="Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>

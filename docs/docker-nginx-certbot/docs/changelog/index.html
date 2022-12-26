@@ -1,0 +1,1624 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Let’s Encrypt 文档">
+      
+      
+      
+        <link rel="canonical" href="https://knative.dev/docs/docker-nginx-certbot/docs/changelog/">
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+    
+    
+      
+        <title>更新日志 - Let’s Encrypt</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.975780f9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="None" data-md-color-accent="None">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#changelog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Let’s Encrypt" class="md-header__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../../../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Let’s Encrypt
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              更新日志
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      主页
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../certbot/instructions/" class="md-tabs__link">
+        Certbot
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../" class="md-tabs__link md-tabs__link--active">
+        docker-nginx-certbot
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Let’s Encrypt" class="md-nav__button md-logo" aria-label="Let’s Encrypt" data-md-component="logo">
+      
+  <img src="../../../images/letsencrypt-logo-horizontal.svg" alt="logo">
+
+    </a>
+    Let’s Encrypt
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wdk-docs/letsencrypt-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/instructions/" class="md-nav__link">
+        说明
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/install/" class="md-nav__link">
+        安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/intro/" class="md-nav__link">
+        介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/using/" class="md-nav__link">
+        手册
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/help/" class="md-nav__link">
+        帮助
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/glossary/" class="md-nav__link">
+        术语
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/faq/" class="md-nav__link">
+        FAQ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../certbot/what/" class="md-nav__link">
+        什么是证书
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          docker-nginx-certbot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="docker-nginx-certbot" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          docker-nginx-certbot
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        入门手册
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../good_to_know/" class="md-nav__link">
+        详细介绍
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced_usage/" class="md-nav__link">
+        高级用法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../certbot_authenticators/" class="md-nav__link">
+        DNS验证器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nginx_tips/" class="md-nav__link">
+        Nginx提示
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dockerhub_tags/" class="md-nav__link">
+        DockerHub标签
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          更新日志
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        更新日志
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    3.2.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#320" class="md-nav__link">
+    3.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#313" class="md-nav__link">
+    3.1.3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#312" class="md-nav__link">
+    3.1.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    3.1.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#310" class="md-nav__link">
+    3.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#301" class="md-nav__link">
+    3.0.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#300" class="md-nav__link">
+    3.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    2.4.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240" class="md-nav__link">
+    2.4.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#230" class="md-nav__link">
+    2.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#220" class="md-nav__link">
+    2.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#210" class="md-nav__link">
+    2.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201" class="md-nav__link">
+    2.0.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#200" class="md-nav__link">
+    2.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#130" class="md-nav__link">
+    1.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#120" class="md-nav__link">
+    1.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110" class="md-nav__link">
+    1.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100" class="md-nav__link">
+    1.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#016" class="md-nav__link">
+    0.16
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#015" class="md-nav__link">
+    0.15
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#014" class="md-nav__link">
+    0.14
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#013" class="md-nav__link">
+    0.13
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#012" class="md-nav__link">
+    0.12
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#011" class="md-nav__link">
+    0.11
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010" class="md-nav__link">
+    0.10
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09" class="md-nav__link">
+    0.9
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09-gamma" class="md-nav__link">
+    0.9-gamma
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09-beta" class="md-nav__link">
+    0.9-beta
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#08" class="md-nav__link">
+    0.8
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    0.7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    0.6
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    0.5
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    0.4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    0.3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    0.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    0.1
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#322" class="md-nav__link">
+    3.2.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#321" class="md-nav__link">
+    3.2.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#320" class="md-nav__link">
+    3.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#313" class="md-nav__link">
+    3.1.3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#312" class="md-nav__link">
+    3.1.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#311" class="md-nav__link">
+    3.1.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#310" class="md-nav__link">
+    3.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#301" class="md-nav__link">
+    3.0.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#300" class="md-nav__link">
+    3.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#241" class="md-nav__link">
+    2.4.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240" class="md-nav__link">
+    2.4.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#230" class="md-nav__link">
+    2.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#220" class="md-nav__link">
+    2.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#210" class="md-nav__link">
+    2.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201" class="md-nav__link">
+    2.0.1
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#200" class="md-nav__link">
+    2.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#130" class="md-nav__link">
+    1.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#120" class="md-nav__link">
+    1.2.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110" class="md-nav__link">
+    1.1.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100" class="md-nav__link">
+    1.0.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#016" class="md-nav__link">
+    0.16
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#015" class="md-nav__link">
+    0.15
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#014" class="md-nav__link">
+    0.14
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#013" class="md-nav__link">
+    0.13
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#012" class="md-nav__link">
+    0.12
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#011" class="md-nav__link">
+    0.11
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010" class="md-nav__link">
+    0.10
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09" class="md-nav__link">
+    0.9
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09-gamma" class="md-nav__link">
+    0.9-gamma
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09-beta" class="md-nav__link">
+    0.9-beta
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#08" class="md-nav__link">
+    0.8
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    0.7
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    0.6
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05" class="md-nav__link">
+    0.5
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04" class="md-nav__link">
+    0.4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03" class="md-nav__link">
+    0.3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02" class="md-nav__link">
+    0.2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01" class="md-nav__link">
+    0.1
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/wdk-docs/letsencrypt-docs/edit/main/docs/docker-nginx-certbot/docs/changelog.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h3 id="322">3.2.2<a class="headerlink" href="#322" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Small syntax fixes recommended by shellcheck.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/147">@ericstengard</a>.</li>
+</ul>
+<h3 id="321">3.2.1<a class="headerlink" href="#321" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Small syntax fixes recommended by shellcheck.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/144">@ericstengard</a>.</li>
+</ul>
+<h3 id="320">3.2.0<a class="headerlink" href="#320" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Make it possible to override the <code>CERTBOT_PRODUCTION_URL</code> and <code>CERTBOT_STAGING_URL</code> variables.</li>
+<li>You can now point certbot to whichever ACME server you want.</li>
+</ul>
+<h3 id="313">3.1.3<a class="headerlink" href="#313" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Recover and retry in case of failed <code>dhparam</code> creation.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/127">@staticfloat</a>.</li>
+</ul>
+<h3 id="312">3.1.2<a class="headerlink" href="#312" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use latest version of Bash in the Alpine image again.</li>
+<li>The <code>wait</code> bug is <a href="https://github.com/JonasAlfredsson/bash_fail-to-wait/issues/2">fixed</a> since Bash 5.1.10.</li>
+</ul>
+<h3 id="311">3.1.1<a class="headerlink" href="#311" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Small <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/73f0a43e5aa9075e00e3a4c01bfe8595aae1509f">bugfix</a> for the <code>dns-route53</code> authenticator.</li>
+<li>Made so it is only bash that is installed from an older Alpine repository.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/117">@dtcooper</a>.</li>
+</ul>
+<h3 id="310">3.1.0<a class="headerlink" href="#310" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Replace <code>sort -u</code> with <code>awk '!a[$0]++'</code> to keep distinct order of the domain names.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/112">@dtcooper</a>.</li>
+</ul>
+<h3 id="301">3.0.1<a class="headerlink" href="#301" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Actually use ECDSA certificates by default.</li>
+<li>Eagerness to deploy latest version this update was forgotten.</li>
+</ul>
+<h3 id="300">3.0.0<a class="headerlink" href="#300" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add support for DNS-01 challenges.</li>
+<li>Check out the list of all currently <a href="../certbot_authenticators/">supported authenticators</a>.</li>
+<li>This also means it is now possible to request wildcard certificates!</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/ffad612ed5555915c37caa2f4d793c26b3809179">@XaF</a>.</li>
+<li>Make it possible to define which authenticator to use on a certificate basis.</li>
+<li>Like with <a href="../advanced_usage/#multi-certificate-setup">ECDSA/RSA</a>, you can
+    <a href="../certbot_authenticators/#using-a-dns-01-authenticator-for-specific-certificates-only">add the authenicator's name</a>
+    in the <code>cert_name</code> to override the default.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/ffad612ed5555915c37caa2f4d793c26b3809179">@XaF</a>.</li>
+<li>Make it possible to use same <code>cert_name</code> across multiple config files.</li>
+<li>The scripts will remember all domain names associated with the cert name.</li>
+<li>This means you can now use as many config files as you want and have them all point to a single certificate.</li>
+<li>Add <a href="https://github.com/bats-core/bats-core">BATS</a>.</li>
+<li>A lot unit tests for the Bash functions we use in the <a href="../../src/scripts/util.sh"><code>util.sh</code></a> file.</li>
+<li>Also add it as a <a href="../.github/workflows/unit_tests.yml">GitHub action</a>.</li>
+<li>A huge thank you to <a href="https://github.com/XaF">@XaF</a> for providing the foundation for this.</li>
+<li>Add ability to override found <code>server_name</code>.</li>
+<li>By adding a comment on the <code>server_name</code> line the script will now use <a href="../advanced_usage/#override-server_name">that instead</a>.</li>
+<li>This enables you to easily group domains under a common wildcard certificate (<a href="../../examples/example_server_overrides.conf">example config</a>).</li>
+<li>Any server name beginning with '<code>~</code>' will be ignored.</li>
+<li>This character means that the server name is a regex, and we cannot use it when requesting certificates.</li>
+<li>Use <a href="../good_to_know/#ecdsa-and-rsa-certificates">ECDSA</a> certificates by default.</li>
+<li>You now have to explicitly set <code>USE_ECDSA=0</code> to disable this.</li>
+<li>We aren't actually introducing any breaking changes, but such a large change deserves a major release.</li>
+<li>Update documentation.</li>
+<li>Update examples.</li>
+</ul>
+<h3 id="241">2.4.1<a class="headerlink" href="#241" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix missing quotes around variable.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/69">@LucianDavies</a>.</li>
+<li>Changed package mirror used by Alpine images. More info in <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/70">issue #70</a>.</li>
+<li>Added more documentation.</li>
+<li>Updated the <code>docker-compose</code> examples a bit.</li>
+</ul>
+<h3 id="240">2.4.0<a class="headerlink" href="#240" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Create a script that can sign certificates with the help of a
+  <a href="./advanced_usage#local-ca">local certificate authortiy</a>.</li>
+<li>It is now possible to work completely offline.</li>
+<li>We can now create certificates for <code>localhost</code>.</li>
+<li>Restructure and add a lot of documentation.</li>
+<li><code>openssl</code> is now a symlink to <code>libressl</code> in the Alpine images.</li>
+<li>This is done to simplify the rest of the scripts since the arguments are
+    the same.</li>
+</ul>
+<h3 id="230">2.3.0<a class="headerlink" href="#230" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add support for <a href="https://sectigostore.com/blog/ecdsa-vs-rsa-everything-you-need-to-know/">ECDSA</a> certificates.</li>
+<li>It is possible to have Nginx serve both ECDSA and RSA certificates at the
+    same time for the same server. Read more in its
+    <a href="../good_to_know/#ecdsa-and-rsa-certificates">good to know section</a>.</li>
+<li>Made so that the the "primary domain"/"cert name" can be
+  <a href="../good_to_know/#how-the-script-add-domain-names-to-certificate-requests">whatever</a>
+  you want.</li>
+<li>This was actually already possible from <a href="#012"><code>v0.12</code></a>, but it is first
+    now we allow it.</li>
+</ul>
+<h3 id="220">2.2.0<a class="headerlink" href="#220" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Listen to IPv6 in the <a href="../../src/nginx_conf.d/redirector.conf">redirector.conf</a>
+  in addition to IPv4.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/44">@staticfloat</a>.</li>
+<li>Add <code>reuseport</code> in the <a href="../../src/nginx_conf.d/redirector.conf">redirector.conf</a>,
+  which improves latency and parallelization.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/45">@staticfloat</a>.</li>
+<li>Add mentions in the changelog to people who have helped with issues.</li>
+</ul>
+<h3 id="210">2.1.0<a class="headerlink" href="#210" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Made the <code>create_dhparams.sh</code> script capable of creating missing directories.</li>
+<li>Our small <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/9dfa927cda7244768445067993dc42e23b4e78da"><code>/docker-entrypoint.d/40-create-dhparam-folder.sh</code></a> script
+    is therefore no longer necessary.</li>
+<li>Made so that we run <code>symlink_user_configs</code> at startup so we do not run into
+  a <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/7c5e2108c89c9da5effda1c499fff6ff84f8b1d3">race condition</a> with Nginx.</li>
+<li>Some minor cleanup in the Dockerfiles related to the above changes.</li>
+</ul>
+<h3 id="201">2.0.1<a class="headerlink" href="#201" title="Permanent link">&para;</a></h3>
+<ul>
+<li>There now exist a Dockerfile for building from the Nginx Alpine image as well.</li>
+<li>It is possible to use the Alpine version by appending <code>-alpine</code> to any
+    of the tags from now on.</li>
+<li>There are now so many tags available, see
+    <a href="../dockerhub_tags/">dockerhub_tags.md</a> for the possible combinations.</li>
+<li>NOTE: There exists a bug in Bash 5.1.0, which is described in detail
+    <a href="https://github.com/JonasAlfredsson/bash_fail-to-wait">here</a>.</li>
+<li>Suggested by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/35">@tudddorrr</a>.</li>
+<li>Small fix to the <code>create_dhparams.sh</code> script to handle the use of libressl
+  in Alpine.</li>
+<li>Added a small sleep in order to mitigate a rare race condition between Nginx
+  startup and the symlink script.</li>
+<li>Fix an ugly printout in the case when the sleep function exited naturally.</li>
+</ul>
+<h3 id="200">2.0.0<a class="headerlink" href="#200" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Big change on how we recommend users to get their <code>.conf</code> files into the
+  container.</li>
+<li>Created a script that <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/91f8ecaa613f1e7c0dc4ece38fa8f38a004f61ec">creates symlinks</a> from <code>conf.d/</code> to the files
+    in <code>user_conf.d/</code>.</li>
+<li>Users can now <a href="../../#run-with-docker-run">start the container</a>
+    without having to build anything.</li>
+<li>Still compatible with <a href="../../#build-it-yourself">the old way</a>, but I
+    still think it's a "major" change.</li>
+<li>Suggested by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/33">@MauriceNino</a>.</li>
+<li>Examples are updated to reflect changes.</li>
+<li>Add more logging.</li>
+<li>Add more <code>"</code> around variables for extra safety.</li>
+<li>Big overhaul of how the documentation is structured.</li>
+<li>Even more tags now available on Docker Hub!</li>
+<li>See <a href="../dockerhub_tags/">dockerhub_tags.md</a> for the list.</li>
+</ul>
+<h3 id="130">1.3.0<a class="headerlink" href="#130" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ignore values starting with <code>data:</code> and <code>engine:</code> when verifying that all
+  files exists.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/32">@bblanchon</a>.</li>
+<li>Add a debug mode which is enabled by setting the environment variable
+  <code>DEBUG=1</code>.</li>
+</ul>
+<h3 id="120">1.2.0<a class="headerlink" href="#120" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix dependencies so that it is possible to build in 32-bit ARM architectures.</li>
+<li>Reported by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/24">RtKelleher</a>.</li>
+<li>Added <a href="https://dependabot.com/">Dependabot</a> to monitor and update the Dockerfiles.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/22">@odin568</a>.</li>
+<li>Added <a href="../.github/workflows">GitHub Actions/Workflows</a> so that each <a href="https://hub.docker.com/r/jonasal/nginx-certbot">tag</a>
+  now is built for multiple arches (<a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/28">issue #28</a>).</li>
+</ul>
+<h3 id="110">1.1.0<a class="headerlink" href="#110" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fix that scripts inside <a href="https://github.com/nginxinc/docker-nginx/tree/master/entrypoint"><code>/docker-entrypoint.d/</code></a> were never run
+  (<a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/21">issue #21</a>).</li>
+<li>Found while helping <a href="https://github.com/isomerpages/isomer-redirection/pull/143">@isomerpages</a> move from @staticfloats image.</li>
+<li>Fix for issue where the script failed in case the <code>/etc/letsencrypt/dhparams</code>
+  folder was missing.</li>
+<li>Reported by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/issues/20">@pmkyl</a>.</li>
+</ul>
+<h3 id="100">1.0.0<a class="headerlink" href="#100" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Move over to <a href="https://semver.org/">semantic versioning</a>.</li>
+<li>The version number will now be given like this: <code>[MAJOR].[MINOR].[PATCH]</code></li>
+<li>This is done to signify that I feel like this code is stable, since I have
+    been running this for quite a while.</li>
+<li>Build from a defined version of Nginx.</li>
+<li>This is done to facilitate a way to lock this container to a more specific
+    version.</li>
+<li>This also allows us to more often trigger rebuilds of this container on
+    Docker Hub.</li>
+<li>New tags are available on <a href="https://hub.docker.com/r/jonasal/nginx-certbot">Docker Hub</a>.</li>
+<li>There will now be tags on the following form:<ul>
+<li>latest</li>
+<li>1.0.0</li>
+<li>1.0.0-nginx1.19.7</li>
+</ul>
+</li>
+</ul>
+<h3 id="016">0.16<a class="headerlink" href="#016" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Container now listens to <a href="../advanced_usage/#manualforce-renewal"><code>SIGHUP</code></a>
+  and will reload all configs if this signal is received.</li>
+<li>More details can be found in the commit message: <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/bf2c1354f55adffadc13b1f1792e205f9dd25f86">bf2c135</a></li>
+<li>Made Docker image slightly smaller by including <code>--no-install-recommends</code>.</li>
+<li>There is now also a <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/tree/dev"><code>dev</code> branch</a>/tag if you are brave and want to run
+  experimental builds.</li>
+<li><a href="https://github.com/JonasAlfredsson/docker-nginx-certbot">JonasAlfredsson/docker-nginx-certbot</a> is now its own independent
+  repository (i.e. no longer just a fork).</li>
+</ul>
+<h3 id="015">0.15<a class="headerlink" href="#015" title="Permanent link">&para;</a></h3>
+<ul>
+<li>It is now possible to
+  <a href="../advanced_usage/#manualforce-renewal">manually trigger</a> a renewal of
+  certificates.</li>
+<li>It is also possible to include "force" to add <code>--force-renewal</code> to the
+    request.</li>
+<li>The "clean exit" trap now handle that parent container changed to
+  <a href="https://github.com/nginxinc/docker-nginx/commit/3fb70ddd7094c1fdd50cc83d432643dc10ab6243"><code>SIGQUIT</code></a> as stop signal.</li>
+<li>The "certbot" server block (in Nginx) now prints to stdout by default.</li>
+<li>Massive refactoring of both code and files:</li>
+<li>Our "start <strong>command</strong>" file is now called <code>start_nginx_certbot.sh</code> instead
+    of <code>entrypoint.sh</code>.</li>
+<li>Both <code>create_dhparams.sh</code> and <code>run_certbot.sh</code> can now be run by themselves
+    inside the container.</li>
+<li>I have added <code>set -e</code> in most of the files so the program exit as intended
+    when unexpected errors occurs.</li>
+<li>Added <code>{}</code> and <code>""</code> around most of the bash variables.</li>
+<li>Change some log messages and where they appear.</li>
+<li>Our <code>/scripts/startup/</code> folder has been removed.</li>
+<li>The parent container will run any <code>*.sh</code> file found inside the
+    <a href="https://github.com/nginxinc/docker-nginx/tree/master/entrypoint"><code>/docker-entrypoint.d/</code></a> folder.</li>
+</ul>
+<h3 id="014">0.14<a class="headerlink" href="#014" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Made so that the container now exits gracefully and reports the correct exit
+  code.</li>
+<li>More details can be found in the commit message: <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/commit/43dde6ec24f399fe49729b28ba4892665e3d7078">43dde6e</a></li>
+<li>Bash script now correctly monitors <strong>both</strong> the Nginx and the certbot renewal
+  process PIDs.</li>
+<li>If either one of these processes dies, the container will exit with the same
+    exit code as that process.</li>
+<li>This will also trigger a graceful exit for the rest of the processes.</li>
+<li>Removed unnecessary and empty <code>ENTRYPOINT</code> from Dockerfile.</li>
+<li>A lot of refactoring of the code, cosmetic changes and editing of comments.</li>
+</ul>
+<h3 id="013">0.13<a class="headerlink" href="#013" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Fixed the regex used in all of the <code>sed</code> commands.</li>
+<li>Now makes sure that the proper amount of spaces are present in the right
+    places.</li>
+<li>Now allows comments at the end of the lines in the configs. <code># Nice!</code></li>
+<li>Made the expression a little bit more readable thanks to the <code>-r</code> flag.</li>
+<li>Now made certbot solely responsible for checking if the certificates needs to
+  be renewed.</li>
+<li>Certbot is actually smart enough to not send any renewal requests if it
+    doesn't have to.</li>
+<li>The time interval used to trigger the certbot renewal check is now user
+  configurable.</li>
+<li>The environment variable to use is <code>RENEWAL_INTERVAL</code>.</li>
+</ul>
+<h3 id="012">0.12<a class="headerlink" href="#012" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Added <code>--cert-name</code> flag to the certbot certificate request command.</li>
+<li>This allows for both adding and subtracting domains to the same certificate
+    file.</li>
+<li>Makes it possible to have path names that are not domain names (but this
+    is not allowed yet).</li>
+<li>Made the file parsing functions smarter so they only find unique file paths.</li>
+<li>Cleaned up some log output.</li>
+<li>Updated the <code>docker-compose</code> example.</li>
+<li>Fixed some spelling in the documentation.</li>
+</ul>
+<h3 id="011">0.11<a class="headerlink" href="#011" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Python 2 is EOL, so it's time to move over to Python 3.</li>
+<li>From now on <a href="https://hub.docker.com/r/jonasal/nginx-certbot">Docker Hub</a> will also automatically build with tags.</li>
+<li>Lock the version by specifying the tag: <code>jonasal/nginx-certbot:0.11</code></li>
+</ul>
+<h3 id="010">0.10<a class="headerlink" href="#010" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Update to new ACME v2 servers.</li>
+<li>PR by <a href="https://github.com/JonasAlfredsson/docker-nginx-certbot/pull/11">@seaneshbaugh</a>.</li>
+</ul>
+<h3 id="09">0.9<a class="headerlink" href="#09" title="Permanent link">&para;</a></h3>
+<ul>
+<li>I am now confident enough to remove the version suffixes.</li>
+<li><code>nginx:mainline</code> is now using Debian 10 Buster.</li>
+<li>Updated documentation.</li>
+</ul>
+<h3 id="09-gamma">0.9-gamma<a class="headerlink" href="#09-gamma" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Make both Nginx and the update script child processes of the <code>entrypoint.sh</code>
+  script.</li>
+<li>Container will now die along with Nginx like it should.</li>
+<li>The Diffie-Hellman parameters now have better permissions.</li>
+<li>Container now exist on <a href="https://hub.docker.com/r/jonasal/nginx-certbot">Docker Hub</a> under <code>jonasal/nginx-certbot:latest</code></li>
+<li>More documentation.</li>
+</ul>
+<h3 id="09-beta">0.9-beta<a class="headerlink" href="#09-beta" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>@JonasAlfredsson</code> enters the battle.</li>
+<li>Diffie-Hellman parameters are now automatically generated.</li>
+<li>Nginx now handles everything HTTP related -&gt; certbot set to webroot mode.</li>
+<li>Better checking to see if necessary files exist.</li>
+<li>Will now request a certificate that includes all domain variants listed
+  on the <code>server_name</code> line.</li>
+<li>More extensive documentation.</li>
+</ul>
+<h3 id="08">0.8<a class="headerlink" href="#08" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Ditch cron, it never liked me anyway.  Just use <code>sleep</code> and a <code>while</code>
+  loop instead.</li>
+</ul>
+<h3 id="07">0.7<a class="headerlink" href="#07" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Complete rewrite, build this image on top of the <code>nginx</code> image, and run
+  <code>cron</code>/<code>certbot</code> alongside <code>nginx</code> so that we can have Nginx configs
+  dynamically enabled as we get SSL certificates.</li>
+</ul>
+<h3 id="06">0.6<a class="headerlink" href="#06" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add <code>nginx_auto_enable.sh</code> script to <code>/etc/letsencrypt/</code> so that users can
+  bring Nginx up before SSL certs are actually available.</li>
+</ul>
+<h3 id="05">0.5<a class="headerlink" href="#05" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Change the name to <code>docker-certbot-cron</code>, update documentation, strip out
+  even more stuff I don't care about.</li>
+</ul>
+<h3 id="04">0.4<a class="headerlink" href="#04" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Rip out a bunch of stuff because <code>@staticfloat</code> is a monster, and likes to
+  do things his way</li>
+</ul>
+<h3 id="03">0.3<a class="headerlink" href="#03" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Add support for webroot mode.</li>
+<li>Run certbot once with all domains.</li>
+</ul>
+<h3 id="02">0.2<a class="headerlink" href="#02" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Upgraded to use certbot client</li>
+<li>Changed image to use alpine linux</li>
+</ul>
+<h3 id="01">0.1<a class="headerlink" href="#01" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Initial release</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../dockerhub_tags/" class="md-footer__link md-footer__link--prev" aria-label="Previous: DockerHub标签" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              DockerHub标签
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      版权所有 © 2022 Knative Authors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/KnativeProject" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://github.com/knative/community" target="_blank" rel="noopener" title="Knative Community on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    <a href="https://slack.knative.dev" target="_blank" rel="noopener" title="Slack" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M94.12 315.1c0 25.9-21.16 47.06-47.06 47.06S0 341 0 315.1c0-25.9 21.16-47.06 47.06-47.06h47.06v47.06zm23.72 0c0-25.9 21.16-47.06 47.06-47.06s47.06 21.16 47.06 47.06v117.84c0 25.9-21.16 47.06-47.06 47.06s-47.06-21.16-47.06-47.06V315.1zm47.06-188.98c-25.9 0-47.06-21.16-47.06-47.06S139 32 164.9 32s47.06 21.16 47.06 47.06v47.06H164.9zm0 23.72c25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06H47.06C21.16 243.96 0 222.8 0 196.9s21.16-47.06 47.06-47.06H164.9zm188.98 47.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06s-21.16 47.06-47.06 47.06h-47.06V196.9zm-23.72 0c0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06V79.06c0-25.9 21.16-47.06 47.06-47.06 25.9 0 47.06 21.16 47.06 47.06V196.9zM283.1 385.88c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06-25.9 0-47.06-21.16-47.06-47.06v-47.06h47.06zm0-23.72c-25.9 0-47.06-21.16-47.06-47.06 0-25.9 21.16-47.06 47.06-47.06h117.84c25.9 0 47.06 21.16 47.06 47.06 0 25.9-21.16 47.06-47.06 47.06H283.1z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tracking", "navigation.tabs.sticky", "navigation.top"], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
+      
+    
+    
+  </body>
+</html>
