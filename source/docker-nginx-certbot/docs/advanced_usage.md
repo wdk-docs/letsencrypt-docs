@@ -6,7 +6,11 @@
 
 ## 手动/强制 更新
 
-手动触发证书的更新可能会很有趣，这就是为什么 [`run_certbot.sh`](../src/scripts/run_certbot.sh)脚本可以在任何时候从容器中独立运行的原因。
+手动触发证书的更新可能会很有趣，这就是为什么 [`run_certbot.sh`](../src/scripts/run_certbot.sh) (1) 脚本可以在任何时候从容器中独立运行的原因。
+
+```nginx title="../src/scripts/run_certbot.sh"
+--8<-- "scripts/run_certbot.sh"
+```
 
 然而，请求重新加载所有配置文件的首选方法是向容器发送[`SIGHUP`][1] :
 

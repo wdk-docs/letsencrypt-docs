@@ -8,6 +8,8 @@ Certbot 使用许多不同的命令(也称为“子命令”)来请求特定的�
 如果您的系统使用较旧的包，web 服务器上的“certbot”脚本可能被命名为“letsencrypt”。
 在整个文档中，无论何时看到“certbot”，请根据需要替换正确的名称。
 
+<a id="plugins"></a>
+
 ## 获得证书(并选择插件)
 
 Certbot 帮助你完成两个任务:
@@ -71,9 +73,9 @@ Apache 插件目前[支持](https://github.com/certbot/certbot/blob/master/certb
 
 ### Webroot
 
-如果你正在运行一个本地 web 服务器，你有能力修改所服务的内容，并且你不希望在证书颁发过程中停止 web 服务器，你可以使用 webroot 插件通过在命令行中包含`certonly` and `--webroot`来获取证书。
-此外，你需要指定`--webroot-path` or `-w`与顶级目录("web root")，其中包含你的 web 服务器提供的文件。
-例如，`--webroot-path /var/www/html` or `--webroot-path /usr/share/nginx/html`是两种常见的 webroot 路径。
+如果你正在运行一个本地 web 服务器，你有能力修改所服务的内容，并且你不希望在证书颁发过程中停止 web 服务器，你可以使用 webroot 插件通过在命令行中包含`certonly` 和 `--webroot`来获取证书。
+此外，你需要指定`--webroot-path` 或 `-w`与顶级目录(`web root`)，其中包含你的 web 服务器提供的文件。
+例如，`--webroot-path /var/www/html` 或 `--webroot-path /usr/share/nginx/html`是两种常见的 webroot 路径。
 
 如果您要同时获得多个域的证书，插件需要知道每个域的文件是从哪里提供的，这可能是每个域的单独目录。
 当为多个域请求证书时，每个域将使用最近指定的`--webroot-path`。举个例子，
@@ -82,20 +84,20 @@ Apache 插件目前[支持](https://github.com/certbot/certbot/blob/master/certb
 certbot certonly --webroot -w /var/www/example -d www.example.com -d example.com -w /var/www/other -d other.example.net -d another.other.example.net
 ```
 
-would obtain a single certificate for all of those names, using the `/var/www/example` webroot directory for the first two, and `/var/www/other` for the second two.
+将为所有这些名称获得一个证书，前两个使用 `/var/www/example` webroot 目录，后两个使用 `/var/www/other`。
 
-The webroot plugin works by creating a temporary file for each of your requested domains in `${webroot-path}/.well-known/acme-challenge`.
-Then the Let's Encrypt validation server makes HTTP requests to validate that the DNS for each requested domain resolves to the server running certbot.
-An example request made to your web server would look like:
+webroot 插件的工作方式是在`${webroot-path}/.well-known/acme-challenge`中为每个请求的域创建一个临时文件。
+然后 Let's Encrypt 验证服务器发出 HTTP 请求，以验证每个请求域的 DNS 解析到运行 certbot 的服务器。
+向 web 服务器发出的请求示例如下:
 
 ```
 66.133.109.36 - - [05/Jan/2016:20:11:24 -0500] "GET /.well-known/acme-challenge/HGr8U1IeTW4kY_Z6UIyaakzOkyQgPr_7ArlLgtZE8SX HTTP/1.1" 200 87 "-" "Mozilla/5.0 (compatible; Let's Encrypt validation server; +https://www.letsencrypt.org)"
 ```
 
-Note that to use the webroot plugin, your server must be configured to serve files from hidden directories.
-If `/.well-known` is treated specially by your webserver configuration, you might need to modify the configuration to ensure that files inside `/.well-known/acme-challenge` are served by the webserver.
+请注意，要使用 webroot 插件，您的服务器必须配置为提供隐藏目录中的文件。
+如果你的 webserver 配置对`/.well-known`进行了特殊处理，你可能需要修改配置，以确保`/.well-known/acme-challenge`中的文件由 webserver 提供。
 
-Under Windows, Certbot will generate a `web.config` file, if one does not already exist, in `/.well-known/acme-challenge` in order to let IIS serve the challenge files even if they do not have an extension.
+在 Windows 下，Certbot 将在`/.well-known/acme-challenge`中生成一个`web.config`文件，以便让 IIS 服务挑战文件，即使它们没有扩展名。
 
 ### Nginx
 
@@ -157,9 +159,9 @@ certbot --nginx
 虽然隐藏在 UI 中，但您可以使用插件通过在命令行上指定`certonly` 和 `--manual`来获取证书。
 这要求您将命令复制并粘贴到另一个终端会话中，该会话可能位于不同的计算机上。
 
-手动插件可以使用`http` or `dns`挑战。您可以使用`--preferred-challenges`选项来选择您喜欢的挑战。
+手动插件可以使用`http` 或 `dns`挑战。您可以使用`--preferred-challenges`选项来选择您喜欢的挑战。
 
-`http` 挑战将要求您将具有特定名称和特定内容的文件直接放置在顶级目录(“web root”)的目录中，该目录包含您的 web 服务器提供的文件。
+`http` 挑战将要求您将具有特定名称和特定内容的文件直接放置在顶级目录(`web root`)的目录中，该目录包含您的 web 服务器提供的文件。
 本质上它和[webroot](#webroot)插件是一样的，但不是自动化的。
 
 当使用`dns`挑战时，`certbot`会要求你在域名下放置一个包含特定内容的 TXT DNS 记录，该记录由你想要颁发证书的主机名组成，以`_acme-challenge`为前缀。
@@ -262,24 +264,26 @@ certbot run -a manual -i nginx -d example.com
 certbot certificates
 ```
 
-This returns information in the following format::
+!!! info "这将以以下格式返回信息"
 
-```
-Found the following certificates:
-Certificate Name: example.com
-Domains: example.com, www.example.com
-Expiry Date: 2017-02-19 19:53:00+00:00 (VALID: 30 days)
-Certificate Path: /etc/letsencrypt/live/example.com/fullchain.pem
-Key Type: RSA
-Private Key Path: /etc/letsencrypt/live/example.com/privkey.pem
-```
+    ```
+    Found the following certificates:
+    Certificate Name: example.com
+    Domains: example.com, www.example.com
+    Expiry Date: 2017-02-19 19:53:00+00:00 (VALID: 30 days)
+    Certificate Path: /etc/letsencrypt/live/example.com/fullchain.pem
+    Key Type: RSA
+    Private Key Path: /etc/letsencrypt/live/example.com/privkey.pem
+    ```
 
-`Certificate Name` shows the name of the certificate.
-Pass this name using the `--cert-name` flag to specify a particular certificate for the `run`, `certonly`, `certificates`, `renew`, and `delete` commands. Example::
+`Certificate Name`显示证书的名称。
+使用`--cert-name`标志传递该名称，为`run`, `certonly`, `certificates`, `renew`, 和 `delete`命令指定一个特定的证书。
 
-```sh
-certbot certonly --cert-name example.com
-```
+!!! example
+
+    ```sh
+    certbot certonly --cert-name example.com
+    ```
 
 <a id="updating_certs"></a>
 
@@ -366,65 +370,52 @@ certbot certonly --cert-name example.com -d example.org,www.example.org
 
 ### RSA 和 ECDSA 钥匙
 
-Certbot supports two certificate private key algorithms: `rsa` and `ecdsa`.
+Certbot 支持两种证书私钥算法:`rsa` 和 `ecdsa`。
 
-As of version 2.0.0, Certbot defaults to ECDSA `secp256r1` (P-256) certificate private keys
-for all new certificates. Existing certificates will continue to renew using their existing key
-type, unless a key type change is requested.
+从版本 2.0.0 开始，Certbot 对所有新证书默认使用 ECDSA `secp256r1` (P-256)证书私钥。
+现有证书将继续使用其现有密钥类型进行更新，除非请求更改密钥类型。
 
-The type of key used by Certbot can be controlled through the `--key-type` option.
-You can use the `--elliptic-curve` option to control the curve used in ECDSA
-certificates and the `--rsa-key-size` option to control the size of RSA keys.
+Certbot 使用的密钥类型可以通过`--key-type`选项来控制。
+您可以使用`--elliptic-curve`选项来控制 ECDSA 证书中使用的曲线，使用`--rsa-key-size`选项来控制 RSA 密钥的大小。
 
-.. warning:: If you obtain certificates using ECDSA keys, you should be careful
-not to downgrade to a Certbot version earlier than 1.10.0 where ECDSA keys were
-not supported. Downgrades like this are possible if you switch from something like
-the snaps or pip to packages provided by your operating system which often lag behind.
+!!! warning
 
-Changing a certificate's key type
+    如果使用ECDSA密钥获取证书，应注意不要降级到不支持ECDSA密钥的1.10.0之前的Certbot版本。
+    如果你从snap或pip之类的软件包切换到通常滞后的操作系统提供的软件包，就有可能出现这样的降级。
 
-````
+#### 更改证书的密钥类型
 
-Unless you are aware that you need to support very old HTTPS clients that are
-not supported by most sites, you can safely transition your site to use
-ECDSA keys instead of RSA keys.
-
-If you want to change a single certificate to use ECDSA keys, you'll need to
-create or renew a certificate while setting `--key-type ecdsa` on the command line:
+如果您想更改单个证书以使用 ECDSA 密钥，您需要在命令行上设置`--key-type ecdsa`时创建或更新证书:
 
 ```shell
   certbot renew --key-type ecdsa --cert-name example.com --force-renewal
 ```
 
-If you want to use ECDSA keys for all certificates in the future (including renewals
-of existing certificates), you can add the following line to Certbot's
-:ref:`configuration file <config-file>`:
+如果您希望将来对所有证书使用 ECDSA 密钥(包括现有证书的更新)，可以在 Certbot 的[配置文件][config-file]中添加以下行
 
-``` ini
+```ini
   key-type = ecdsa
-````
+```
 
-which will take effect upon the next renewal of each certificate.
+该条例将于每次证书续期时生效。
 
 ## 撤销证书
 
-If you need to revoke a certificate, use the `revoke` subcommand to do so.
+如果您需要撤销证书，请使用`revoke`子命令来执行。
 
-A certificate may be revoked by providing its name (see `certbot certificates`) or by providing
-its path directly
+证书可以通过提供其名称(参见`certbot certificates`)或直接提供其路径来撤销
 
 ```sh
   certbot revoke --cert-name example.com
   certbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem
 ```
 
-If the certificate being revoked was obtained via the `--staging`, `--test-cert` or a non-default `--server` flag,
-that flag must be passed to the `revoke` subcommand.
+如果被撤销的证书是通过`--staging`, `--test-cert`或非默认的`--server`标志获得的，则该标志必须传递给`revoke`子命令。
 
 !!! note
 
-    After revocation, Certbot will (by default) ask whether you want to **delete** the certificate.
-    Unless deleted, Certbot will try to renew revoked certificates the next time ``certbot renew`` runs.
+    在撤销证书后，Certbot将(默认情况下)询问您是否要**删除**证书。
+    除非删除，否则Certbot将在``certbot renew``下次运行时尝试更新已撤销的证书。
 
 You can also specify the reason for revoking your certificate by using the `reason` flag.
 Reasons include `unspecified` which is the default, as well as `keycompromise`, `affiliationchanged`, `superseded`, and `cessationofoperation`
@@ -447,11 +438,11 @@ certbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem --key-path
 
 ### 删除证书
 
-If you need to delete a certificate, use the `delete` subcommand.
+如果您需要删除证书，请使用 `delete` 子命令。
 
 !!! note
 
-    Read this and the `Safely deleting certificates`\_ sections carefully. This is an irreversible operation and must be done with care.
+    请仔细阅读本文和[安全删除证书](#safely-deleting-certificates)部分。这是一个不可逆的手术，必须小心操作。
 
 Certbot does not automatically revoke a certificate before deleting it. If you're no longer using a certificate and don't
 plan to use it anywhere else, you may want to follow the instructions in `Revoking certificates`\_ instead. Generally, there's
@@ -469,14 +460,13 @@ Otherwise, you will be prompted to choose one or more certificates to delete
 
 ```sh
 certbot delete --cert-name example.com
-
 ## or to choose from a list:
-
 certbot delete
-
-Safely deleting certificates
-
 ```
+
+<a id="safely-deleting-certificates"></a>
+
+#### Safely deleting certificates
 
 Deleting a certificate without following the proper steps can result in a non-functioning server. To safely delete a
 certificate, follow all the steps below to make sure that references to a certificate are removed from the configuration
@@ -532,16 +522,16 @@ Follow these steps to safely delete a certificate:
 
 !!! note
 
-    Let's Encrypt CA issues short-lived certificates (90 days). Make sure you renew the certificates at least once in 3 months.
+    让我们加密CA颁发短命证书(90天)。请确保您至少每3个月更新一次证书。
 
 !!! quote
 
-    Most Certbot installations come with automatic renewal out of the box. See `Automated Renewals`\_ for more details.
+    大多数Certbot安装都带有自动更新功能。详情请参见[自动续订]()。
 
 !!! quote
 
-    Users of the `Manual`_ plugin should note that `--manual` certificates will not renew automatically, unless combined with authentication hook scripts.
-    See `Renewal with the manual plugin <#manual-renewal>`_.
+    [Manual](#Manual)插件的用户应该注意，`--manual`证书不会自动更新，除非结合了身份验证钩子脚本。
+    查看 `[使用手动插件更新](#manual-renewal).
 
 As of version 0.10.0, Certbot supports a `renew` action to check all installed certificates for impending expiry and attempt to renew them.
 The simplest form is simply
@@ -667,20 +657,18 @@ and when renewal is not necessary.
 
 ## 修改已有证书的更新配置
 
-When creating a certificate, Certbot will keep track of all of the relevant options chosen by the user. At renewal
-time, Certbot will remember these options and apply them once again.
+在创建证书时，Certbot 将跟踪用户选择的所有相关选项。
+在更新时，Certbot 将记住这些选项并再次应用它们。
 
-Sometimes, you may encounter the need to change some of these options for future certificate renewals. To achieve this,
-you will need to perform the following steps:
+有时，您可能会遇到需要更改其中一些选项以用于将来的证书更新。
+为此，您需要执行以下步骤:
 
-1. Perform a _dry run renewal_ with the amended options on the command line. This allows you to confirm that the change
-   is valid and will result in successful future renewals.
-2. If the dry run is successful, perform a _live renewal_ of the certificate. This will persist the change for future
-   renewals. If the certificate is not yet due to expire, you will need to force a renewal using `--force-renewal`.
+1. Perform a _dry run renewal_ with the amended options on the command line. This allows you to confirm that the change is valid and will result in successful future renewals.
+2. If the dry run is successful, perform a _live renewal_ of the certificate. This will persist the change for future renewals. If the certificate is not yet due to expire, you will need to force a renewal using `--force-renewal`.
 
 !!! note
 
-    Rate limits from the certificate authority may prevent you from performing multiple renewals in a short
+    证书颁发机构的费率限制可能会阻止您在短时间内执行多次更新
 
 period of time. It is strongly recommended to perform the second step only once, when you have decided on what
 options should change.
@@ -784,114 +772,93 @@ If you are interested in learning more about how Certbot renews your certificate
 - 如果第一个域是通配符域(例如;`*.example.com`)证书名称将为`example.com`，
 - 如果与已命名为`example.com`的证书发生名称冲突，则将使用`example.com-001`数字序列构造新的证书名称。.
 
-For historical reasons, the containing directories are created with
-permissions of `0700` meaning that certificates are accessible only
-to servers that run as the root user. **If you will never downgrade
-to an older version of Certbot**, then you can safely fix this using
-`chmod 0755 /etc/letsencrypt/{live,archive}`.
+由于历史原因，包含目录的创建权限为`0700`，这意味着只有作为根用户运行的服务器才能访问证书。
+**如果你永远不会降级到旧版本的 Certbot**，那么你可以使用`chmod 0755 /etc/letsencrypt/{live,archive}`来安全地修复这个问题。
 
-For servers that drop root privileges before attempting to read the
-private key file, you will also need to use `chgrp` and `chmod
-0640` to allow the server to read
-`/etc/letsencrypt/live/$domain/privkey.pem`.
+对于在尝试读取私钥文件之前放弃根权限的服务器，您还需要使用`chgrp` 和 `chmod 0640` 来允许服务器读取`/etc/letsencrypt/live/$domain/privkey.pem`。
 
 !!! note
 
-    `/etc/letsencrypt/archive` and `/etc/letsencrypt/keys`
+    `/etc/letsencrypt/archive` 和 `/etc/letsencrypt/keys`包含所有以前的密钥和证书，
+    而`/etc/letsencrypt/live`符号链接到最新版本。
 
-contain all previous keys and certificates, while `/etc/letsencrypt/live` symlinks to the latest versions.
+已获取以下文件:
 
-The following files are available:
+`privkey.pem`
 
-`privkey.pem` Private key for the certificate.
+: 证书的私钥。
 
-!!! warning
+    !!! warning "这**必须一直保密**!千万不要和任何人分享，包括Certbot的开发者。"
 
-    This **must be kept secret at all times**! Never share it with anyone, including Certbot developers.
-    You cannot put it into a safe, however - your server still needs to access this file in order for SSL/TLS to work.
+        但是，您不能将其放入保险箱中—您的服务器仍然需要访问此文件才能使SSL/TLS工作。
 
-!!! note
+    !!! note "从Certbot 0.29.0版本开始，新证书的私钥默认为`0600`。对该文件的组模式或组所有者(gid)的任何更改都将在更新时保留。"
 
-    As of Certbot version 0.29.0, private keys for new certificate default to `0600`.
-    Any changes to the group mode or group owner (gid) of this file will be preserved on renewals.
-
-This is what Apache needs for `SSLCertificateKeyFile  <https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatekeyfile>`_,
-and Nginx for `ssl_certificate_key  <https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate_key>`_.
+    这是Apache为[SSLCertificateKeyFile](https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatekeyfile)和Nginx为[ssl_certificate_key](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate_key)所需要的
 
 `fullchain.pem`
-All certificates, **including** server certificate (aka leaf certificate or
-end-entity certificate). The server certificate is the first one in this file,
-followed by any intermediates.
 
-This is what Apache >= 2.4.8 needs for `SSLCertificateFile  <https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatefile>`_,
-and what Nginx needs for `ssl_certificate  <https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate>`_.
+: 所有证书，**包括**服务器证书(又名叶证书或最终实体证书)。
 
-`cert.pem` and `chain.pem` (less common)
-`cert.pem` contains the server certificate by itself, and
-`chain.pem` contains the additional intermediate certificate or
-certificates that web browsers will need in order to validate the
-server certificate. If you provide one of these files to your web
-server, you **must** provide both of them, or some browsers will show
-"This Connection is Untrusted" errors for your site, `some of the time
-  <https://whatsmychaincert.com/>`\_.
+    服务器证书是该文件中的第一个证书，随后是任何中间证书。
 
-Apache < 2.4.8 needs these for `SSLCertificateFile  <https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatefile>`_.
-and `SSLCertificateChainFile  <https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatechainfile>`_,
-respectively.
+    这是Apache >= 2.4.8需要的[SSLCertificateFile](https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatefile)和Nginx需要的[ssl_certificate](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate)
 
-If you're using OCSP stapling with Nginx >= 1.3.7, `chain.pem` should be
-provided as the `ssl_trusted_certificate  <https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate>`\_
-to validate OCSP responses.
+`cert.pem` and `chain.pem` (不太常见)
+
+: `cert.pem`包含服务器证书本身，`chain.pem`包含浏览器验证服务器证书所需的额外中间证书或证书。
+
+    如果您向web服务器提供其中一个文件，您**必须**同时提供两个文件，否则某些浏览器会为您的站点显示“This Connection is Untrusted”错误[有时](https://whatsmychaincert.com)。
+
+    Apache < 2.4.8分别需要这些[SSLCertificateFile](https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatefile)和[SSLCertificateChainFile](https://httpd.apache.org/docs/2.4/mod/mod_ssl.html#sslcertificatechainfile)。
+
+    如果你正在使用Nginx >= 1.3.7的OCSP钉书，`chain.pem`应该作为[ssl_trusted_certificate](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_trusted_certificate)来验证OCSP响应。
 
 !!! note
 
-    All files are PEM-encoded.
-
-If you need other format, such as DER or PFX, then you
-could convert using `openssl`. You can automate that with
-`--deploy-hook` if you're using automatic renewal\_.
+    所有文件都是PEM-encoded的。
+    如果您需要其他格式，例如DER或PFX，那么您可以使用`openssl`进行转换。
+    如果你使用的是自动更新，你可以用`--deploy-hook`来自动[更新](#renewal)。
 
 <a id="hooks"></a>
 
 ## 前和后验证挂钩
 
-Certbot allows for the specification of pre and post validation hooks when run
-in manual mode. The flags to specify these scripts are `--manual-auth-hook`
-and `--manual-cleanup-hook` respectively and can be used as follows:
+Certbot 允许在手动模式下运行前和后验证挂钩的规范。
+指定这些脚本的标志分别是`--manual-auth-hook` 和 `--manual-cleanup-hook`，可以如下使用:
 
 ```sh
 certbot certonly --manual --manual-auth-hook /path/to/http/authenticator.sh --manual-cleanup-hook /path/to/http/cleanup.sh -d secure.example.com
 ```
 
-This will run the `authenticator.sh` script, attempt the validation, and then run
-the `cleanup.sh` script. Additionally certbot will pass relevant environment
-variables to these scripts:
+这将运行`authenticator.sh`脚本，尝试验证，然后运行`cleanup.sh`脚本。
+此外，certbot 将把相关的环境变量传递给这些脚本:
 
-- `CERTBOT_DOMAIN`: The domain being authenticated
-- `CERTBOT_VALIDATION`: The validation string
-- `CERTBOT_TOKEN`: Resource name part of the HTTP-01 challenge (HTTP-01 only)
-- `CERTBOT_REMAINING_CHALLENGES`: Number of challenges remaining after the current challenge
-- `CERTBOT_ALL_DOMAINS`: A comma-separated list of all domains challenged for the current certificate
+- `CERTBOT_DOMAIN`: 正在验证的域
+- `CERTBOT_VALIDATION`: 验证字符串
+- `CERTBOT_TOKEN`: HTTP-01 挑战的资源名部分(仅限 HTTP-01)
+- `CERTBOT_REMAINING_CHALLENGES`: 当前挑战结束后剩余的挑战数
+- `CERTBOT_ALL_DOMAINS`: 当前证书挑战的所有域的逗号分隔列表
 
-Additionally for cleanup:
+另外用于清理:
 
-- `CERTBOT_AUTH_OUTPUT`: Whatever the auth script wrote to stdout
+- `CERTBOT_AUTH_OUTPUT`: 认证脚本写入标准输出的内容
 
-Example usage for HTTP-01:
+!!! example "HTTP-01 的使用示例:"
 
-```sh
-certbot certonly --manual --preferred-challenges=http --manual-auth-hook /path/to/http/authenticator.sh --manual-cleanup-hook /path/to/http/cleanup.sh -d secure.example.com
-```
+    ```sh
+    certbot certonly --manual --preferred-challenges=http --manual-auth-hook /path/to/http/authenticator.sh --manual-cleanup-hook /path/to/http/cleanup.sh -d secure.example.com
+    ```
 
-```sh title="/path/to/http/authenticator.sh"
-#!/bin/bash
-echo $CERTBOT_VALIDATION > /var/www/htdocs/.well-known/acme-challenge/$CERTBOT_TOKEN
-```
+    ```sh title="/path/to/http/authenticator.sh"
+    #!/bin/bash
+    echo $CERTBOT_VALIDATION > /var/www/htdocs/.well-known/acme-challenge/$CERTBOT_TOKEN
+    ```
 
-```sh title="/path/to/http/cleanup.sh"
-#!/bin/bash
-rm -f /var/www/htdocs/.well-known/acme-challenge/$CERTBOT_TOKEN
-```
+    ```sh title="/path/to/http/cleanup.sh"
+    #!/bin/bash
+    rm -f /var/www/htdocs/.well-known/acme-challenge/$CERTBOT_TOKEN
+    ```
 
 !!! example "DNS-01 (Cloudflare API v4)的使用示例(仅供示例使用，不按原样使用)"
 
@@ -899,127 +866,109 @@ rm -f /var/www/htdocs/.well-known/acme-challenge/$CERTBOT_TOKEN
     certbot certonly --manual --preferred-challenges=dns --manual-auth-hook /path/to/dns/authenticator.sh --manual-cleanup-hook /path/to/dns/cleanup.sh -d secure.example.com
     ```
 
-```sh title="/path/to/dns/authenticator.sh"
-#!/bin/bash
+    ```sh title="/path/to/dns/authenticator.sh"
+    #!/bin/bash
 
-# Get your API key from https://www.cloudflare.com/a/account/my-account
-API_KEY="your-api-key"
-EMAIL="your.email@example.com"
+    # Get your API key from https://www.cloudflare.com/a/account/my-account
+    API_KEY="your-api-key"
+    EMAIL="your.email@example.com"
 
-# Strip only the top domain to get the zone id
-DOMAIN=$(expr match "$CERTBOT_DOMAIN" '.*\.\(.*\..*\)')
+    # Strip only the top domain to get the zone id
+    DOMAIN=$(expr match "$CERTBOT_DOMAIN" '.*\.\(.*\..*\)')
 
-# Get the Cloudflare zone id
-ZONE_EXTRA_PARAMS="status=active&page=1&per_page=20&order=status&direction=desc&match=all"
-ZONE_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$DOMAIN&$ZONE_EXTRA_PARAMS" \
-     -H     "X-Auth-Email: $EMAIL" \
-     -H     "X-Auth-Key: $API_KEY" \
-     -H     "Content-Type: application/json" | python -c "import sys,json;print(json.load(sys.stdin)['result'][0]['id'])")
+    # Get the Cloudflare zone id
+    ZONE_EXTRA_PARAMS="status=active&page=1&per_page=20&order=status&direction=desc&match=all"
+    ZONE_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=$DOMAIN&$ZONE_EXTRA_PARAMS" \
+        -H     "X-Auth-Email: $EMAIL" \
+        -H     "X-Auth-Key: $API_KEY" \
+        -H     "Content-Type: application/json" | python -c "import sys,json;print(json.load(sys.stdin)['result'][0]['id'])")
 
-# Create TXT record
-CREATE_DOMAIN="_acme-challenge.$CERTBOT_DOMAIN"
-RECORD_ID=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
-     -H     "X-Auth-Email: $EMAIL" \
-     -H     "X-Auth-Key: $API_KEY" \
-     -H     "Content-Type: application/json" \
-     --data '{"type":"TXT","name":"'"$CREATE_DOMAIN"'","content":"'"$CERTBOT_VALIDATION"'","ttl":120}' \
-             | python -c "import sys,json;print(json.load(sys.stdin)['result']['id'])")
-# Save info for cleanup
-if [ ! -d /tmp/CERTBOT_$CERTBOT_DOMAIN ];then
-        mkdir -m 0700 /tmp/CERTBOT_$CERTBOT_DOMAIN
-fi
-echo $ZONE_ID > /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID
-echo $RECORD_ID > /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID
-
-# Sleep to make sure the change has time to propagate over to DNS
-sleep 25
-```
-
-```sh title="/path/to/dns/cleanup.sh"
-#!/bin/bash
-
-# Get your API key from https://www.cloudflare.com/a/account/my-account
-API_KEY="your-api-key"
-EMAIL="your.email@example.com"
-
-if [ -f /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID ]; then
-        ZONE_ID=$(cat /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID)
-        rm -f /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID
-fi
-
-if [ -f /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID ]; then
-        RECORD_ID=$(cat /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID)
-        rm -f /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID
-fi
-
-# Remove the challenge TXT record from the zone
-if [ -n "${ZONE_ID}" ]; then
-    if [ -n "${RECORD_ID}" ]; then
-        curl -s -X DELETE "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
-                -H "X-Auth-Email: $EMAIL" \
-                -H "X-Auth-Key: $API_KEY" \
-                -H "Content-Type: application/json"
+    # Create TXT record
+    CREATE_DOMAIN="_acme-challenge.$CERTBOT_DOMAIN"
+    RECORD_ID=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records" \
+        -H     "X-Auth-Email: $EMAIL" \
+        -H     "X-Auth-Key: $API_KEY" \
+        -H     "Content-Type: application/json" \
+        --data '{"type":"TXT","name":"'"$CREATE_DOMAIN"'","content":"'"$CERTBOT_VALIDATION"'","ttl":120}' \
+                | python -c "import sys,json;print(json.load(sys.stdin)['result']['id'])")
+    # Save info for cleanup
+    if [ ! -d /tmp/CERTBOT_$CERTBOT_DOMAIN ];then
+            mkdir -m 0700 /tmp/CERTBOT_$CERTBOT_DOMAIN
     fi
-fi
-```
+    echo $ZONE_ID > /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID
+    echo $RECORD_ID > /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID
+
+    # Sleep to make sure the change has time to propagate over to DNS
+    sleep 25
+    ```
+
+    ```sh title="/path/to/dns/cleanup.sh"
+    #!/bin/bash
+
+    # Get your API key from https://www.cloudflare.com/a/account/my-account
+    API_KEY="your-api-key"
+    EMAIL="your.email@example.com"
+
+    if [ -f /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID ]; then
+            ZONE_ID=$(cat /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID)
+            rm -f /tmp/CERTBOT_$CERTBOT_DOMAIN/ZONE_ID
+    fi
+
+    if [ -f /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID ]; then
+            RECORD_ID=$(cat /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID)
+            rm -f /tmp/CERTBOT_$CERTBOT_DOMAIN/RECORD_ID
+    fi
+
+    # Remove the challenge TXT record from the zone
+    if [ -n "${ZONE_ID}" ]; then
+        if [ -n "${RECORD_ID}" ]; then
+            curl -s -X DELETE "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/dns_records/$RECORD_ID" \
+                    -H "X-Auth-Email: $EMAIL" \
+                    -H "X-Auth-Key: $API_KEY" \
+                    -H "Content-Type: application/json"
+        fi
+    fi
+    ```
 
 <a id="lock-files"></a>
 
 ## 更改 ACME 服务器
 
-By default, Certbot uses Let's Encrypt's production server at https://acme-v02.api.letsencrypt.org/directory.
-You can tell Certbot to use a different CA by providing `--server` on the command line or in a :ref:`configuration file <config-file>` with the URL of the server's
-ACME directory. For example, if you would like to use Let's Encrypt's
-staging server, you would add `--server
-https://acme-staging-v02.api.letsencrypt.org/directory` to the command line.
+默认情况下，Certbot 使用 Let’s Encrypt 的生产服务器 <https://acme-v02.api.letsencrypt.org/directory>。
+您可以告诉 Certbot 使用不同的 CA，方法是在命令行上提供`--server`，或者在[配置文件](#config-file)中提供服务器 ACME 目录的 URL。
+例如，如果你想使用 Let's Encrypt 的登台服务器，你可以在命令行中添加`——server https://acme-staging-v02.api.letsencrypt.org/directory`。
 
-If Certbot does not trust the SSL certificate used by the ACME server, you
-can use the `REQUESTS_CA_BUNDLE
-<https://requests.readthedocs.io/en/latest/user/advanced/#ssl-cert-verification>`\_
-environment variable to override the root certificates trusted by Certbot. Certbot
-uses the `requests` library, which does not use the operating system trusted root store.
+如果 Certbot 不信任 ACME 服务器使用的 SSL 证书，则可以使用[REQUESTS_CA_BUNDLE](https://requests.readthedocs.io/en/latest/user/advanced/#ssl-cert-verification)
+环境变量覆盖 Certbot 信任的根证书。
+Certbot 使用`requests`库，它不使用操作系统受信任的根存储。
 
-If you use `--server` to specify an ACME CA that implements the standardized
-version of the spec, you may be able to obtain a certificate for a
-wildcard domain. Some CAs (such as Let's Encrypt) require that domain
-validation for wildcard domains must be done through modifications to
-DNS records which means that the dns-01* challenge type must be used. To
-see a list of Certbot plugins that support this challenge type and how
-to use them, see plugins*.
+如果使用`--server`指定实现规范的标准化版本的 ACME CA，则可以获得通配符域的证书。
+一些 CAs(例如 Let’s Encrypt)要求通配符域的域验证必须通过修改 DNS 记录来完成，这意味着必须使用 [dns-01](https://datatracker.ietf.org/doc/html/rfc8555#section-8.4) 挑战类型。
+要查看支持此挑战类型的 Certbot 插件列表以及如何使用它们，请参阅[插件](#plugins)。
 
 ## 锁文件
 
-When processing a validation Certbot writes a number of lock files on your system
-to prevent multiple instances from overwriting each other's changes. This means
-that by default two instances of Certbot will not be able to run in parallel.
+在处理验证时，Certbot 会在您的系统上写入一些锁文件，以防止多个实例相互覆盖更改。
+这意味着默认情况下 Certbot 的两个实例不能并行运行。
 
-Since the directories used by Certbot are configurable, Certbot
-will write a lock file for all of the directories it uses. This include Certbot's
-`--work-dir`, `--logs-dir`, and `--config-dir`. By default these are
-`/var/lib/letsencrypt`, `/var/log/letsencrypt`, and `/etc/letsencrypt`
-respectively. Additionally if you are using Certbot with Apache or nginx it will
-lock the configuration folder for that program, which are typically also in the
-`/etc` directory.
+由于 Certbot 使用的目录是可配置的，因此 Certbot 将为它使用的所有目录编写一个锁文件。
+这包括 Certbot 的`--work-dir`, `--logs-dir`, 和 `--config-dir`。
+默认情况下，它们分别是`/var/lib/letsencrypt`, `/var/log/letsencrypt`, 和 `/etc/letsencrypt`。
+此外，如果你在 Apache 或 nginx 上使用 Certbot，它会锁定该程序的配置文件夹，通常也在`/etc`目录下。
 
-Note that these lock files will only prevent other instances of Certbot from
-using those directories, not other processes. If you'd like to run multiple
-instances of Certbot simultaneously you should specify different directories
-as the `--work-dir`, `--logs-dir`, and `--config-dir` for each instance
-of Certbot that you would like to run.
+注意，这些锁文件只会阻止 Certbot 的其他实例使用这些目录，而不是其他进程。
+如果你想同时运行 Certbot 的多个实例，你应该为你想要运行的每个 Certbot 实例指定不同的目录，如`--work-dir`, `--logs-dir`, 和 `--config-dir`。
 
 <a id="config-file"></a>
 
 ## 配置文件
 
-Certbot accepts a global configuration file that applies its options to all invocations
-of Certbot. Certificate specific configuration choices should be set in the `.conf`
-files that can be found in `/etc/letsencrypt/renewal`.
+Certbot 接受一个全局配置文件，该文件将其选项应用于 Certbot 的所有调用。
+特定于证书的配置选项应该设置在`.conf`文件中，该文件可以在`/etc/letsencrypt/renewal`中找到。
 
-By default no cli.ini file is created (though it may exist already if you installed Certbot
-via a package manager, for instance).
-After creating one it is possible to specify the location of this configuration file with
-`certbot --config cli.ini` (or shorter `-c cli.ini`). An
-example configuration file is shown below:
+默认情况下不会创建 cli.ini 文件(例如，如果通过包管理器安装 Certbot，则可能已经存在 cli.ini 文件)。
+在创建一个配置文件后，可以使用`certbot --config cli.ini`(或更短的`-c cli.ini`)指定该配置文件的位置。
+配置文件示例如下所示:
 
 ```sh
 # This is an example of the kind of things you can do in a configuration file.
@@ -1058,44 +1007,42 @@ rsa-key-size = 4096
 # eab-hmac-key = yaddayaddahexhexnotquoted
 ```
 
-By default, the following locations are searched:
+默认情况下，搜索以下位置:
 
 - `/etc/letsencrypt/cli.ini`
 - `$XDG_CONFIG_HOME/letsencrypt/cli.ini` (or `~/.config/letsencrypt/cli.ini` if `$XDG_CONFIG_HOME` is not set).
 
-Since this configuration file applies to all invocations of certbot it is incorrect
-to list domains in it. Listing domains in cli.ini may prevent renewal from working.
-Additionally due to how arguments in cli.ini are parsed, options which wish to
-not be set should not be listed. Options set to false will instead be read
-as being set to true by older versions of Certbot, since they have been listed
-in the config file.
+由于该配置文件适用于 certbot 的所有调用，因此在其中列出域是不正确的。
+在 cli.ini 中列出域名可能会阻止更新工作。
+此外，由于 cli.ini 中的参数是如何解析的，不应该列出不希望设置的选项。
+设置为 false 的选项将被旧版本的 Certbot 读取为 true，因为它们已经在配置文件中列出。
 
-.. keep it up to date with constants.py
+.. 使用 constants.py 使其保持最新
 
 <a id="log-rotation"></a>
 
 ## 日志轮转
 
-By default certbot stores status logs in `/var/log/letsencrypt`. By default
-certbot will begin rotating logs once there are 1000 logs in the log directory.
-Meaning that once 1000 files are in `/var/log/letsencrypt` Certbot will delete
-the oldest one to make room for new logs. The number of subsequent logs can be
-changed by passing the desired number to the command line flag
-`--max-log-backups`. Setting this flag to 0 disables log rotation entirely,
-causing certbot to always append to the same log file.
+默认情况下，certbot 将状态日志存储在`/var/log/letsencrypt`中。
+默认情况下，当日志目录中有 1000 个日志时，certbot 将开始旋转日志。
+这意味着一旦有 1000 个文件在`/var/log/letsencrypt`中，Certbot 将删除最旧的文件，为新日志腾出空间。
+后续日志的数量可以通过将所需的数量传递给命令行标志`--max-log-backups`来更改。
+将此标志设置为 0 将完全禁用日志旋转，导致 certbot 始终附加到相同的日志文件。
 
 !!! note
 
-    Some distributions, including Debian and Ubuntu, disable certbot's internal log rotation in favor of a more traditional logrotate script.
-    If you are using a distribution's packages and want to alter the log rotation, check `/etc/logrotate.d/` for a certbot rotation script.
+    一些发行版，包括Debian和Ubuntu，禁用了certbot的内部日志旋转，而支持更传统的logrotate脚本。
+    如果您正在使用发行版的包，并想要更改日志轮换，请检查`/etc/logrotate.d/`表示certbot旋转脚本。
 
 <a id="command-line"></a>
 
 ## Certbot 命令行选项
 
-Certbot supports a lot of command line options. Here's the full list, from `certbot --help all`:
+Certbot 支持很多命令行选项。以下是来自`certbot --help all`的完整列表:
 
-.. literalinclude:: cli-help.txt
+```console
+--8<-- "cli-help.txt"
+```
 
 ## 得到帮助
 
