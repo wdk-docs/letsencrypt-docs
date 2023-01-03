@@ -1,8 +1,6 @@
 # 简介
 
-!!! quote
-
-    文档源：<https://eff-certbot.readthedocs.io/en/stable/index.html>
+:link: <https://eff-certbot.readthedocs.io/en/stable/index.html>
 
 !!! Note
 
